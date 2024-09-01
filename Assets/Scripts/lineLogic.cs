@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DottedLineController : MonoBehaviour
+public class lineLogic : MonoBehaviour
 {
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private Transform startPoint;
