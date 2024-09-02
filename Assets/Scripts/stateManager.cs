@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class stateManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject rock;
+    private GameObject currentRock;
+
+    private void Start()
     {
-        
+        currentRock = Instantiate(rock);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (currentRock == null) currentRock = Instantiate(rock);
     }
 }

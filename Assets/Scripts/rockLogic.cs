@@ -10,19 +10,38 @@ public class rockLogic : MonoBehaviour
     [SerializeField] private float pushForce = 1f;
     [SerializeField] private float maxpushForce = 30.0f;
     private Vector2 dir;
+    private bool isOnHand;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         cue = transform.GetChild(0).transform;
         line = transform.GetChild(1).transform;
+
+        SetVisibility(false);
+        isOnHand = true;
+
+        GetComponent<CircleCollider2D>().enabled = false;
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && pushForce < maxpushForce)
+        if (isOnHand) 
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 1f;
+            transform.position = mousePosition;
+        }
+        if (!isOnHand && Input.GetMouseButton(0) && pushForce < maxpushForce)
         {
             pushForce += Time.deltaTime * 12;
             cue.localPosition += Vector3.left * Time.deltaTime * 2;
+        }
+        if (Input.GetMouseButtonDown(0) && isOnHand) 
+        {
+            GetComponent<CircleCollider2D>().enabled = true;
+            isOnHand = false;
+            SetVisibility(true);
         }
         if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
         {
@@ -35,20 +54,25 @@ public class rockLogic : MonoBehaviour
             cue.localPosition = new Vector3(-18.75f, 0f, 0f);
             pushForce = 0;
         }
-        if (Input.GetMouseButtonDown(1))
+        if (!isOnHand && Input.GetMouseButtonDown(1))
         {
             pushForce = maxpushForce;
             cue.localPosition += Vector3.left * 4;
         }
-        if (rb.velocity.magnitude < 0.01f)
+        if (!isOnHand && rb.velocity.magnitude < 0.02f)
         {
-            OnAction();
+            SetVisibility(true);
         }
     }
 
-    void OnAction()
+    void SetVisibility(bool visibility)
     {
-        cue.gameObject.SetActive(true);
-        line.gameObject.SetActive(true);
+        cue.gameObject.SetActive(visibility);
+        line.gameObject.SetActive(visibility);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Destroy(this);
     }
 }

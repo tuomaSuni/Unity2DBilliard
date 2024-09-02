@@ -16,8 +16,7 @@ public class HoleLogic : MonoBehaviour
         Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero;
         
-        Vector3 newScale = col.gameObject.transform.localScale * 0.75f;
-        col.gameObject.transform.localScale = newScale;
+        col.gameObject.transform.localScale *= 0.75f;
     }
 
     IEnumerator End(Collider2D col)
