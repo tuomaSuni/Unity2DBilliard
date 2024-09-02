@@ -16,12 +16,23 @@ public class RockLogic : MonoBehaviour
     private bool isFree = true;
     private bool initialClickReleased = false;
     private bool isMoving = false;
+    private SpriteRenderer nan;
+    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
+
+    void Awake()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 1f;
+        transform.position = mousePosition;
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
         cue = transform.GetChild(0).transform;
         line = transform.GetChild(1).transform;
+        nan = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>();
 
         SetVisibility(false);
         GetComponent<CircleCollider2D>().isTrigger = true;
@@ -130,13 +141,45 @@ public class RockLogic : MonoBehaviour
         line.gameObject.SetActive(visibility);
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        // Add the collider to the contact list
+        collidersInContact.Add(col);
+
+        // Update the state based on contact
+        UpdateState();
+    }
+
     void OnTriggerStay2D(Collider2D col)
     {
-        isFree = false;
+        // Ensure the collider is in the contact list
+        collidersInContact.Add(col);
+
+        // Update the state
+        UpdateState();
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        isFree = true;
+        // Remove the collider from the contact list
+        collidersInContact.Remove(col);
+
+        // Update the state
+        UpdateState();
+    }
+
+    private void UpdateState()
+    {
+        // If there are any colliders still in contact, set the state accordingly
+        if (collidersInContact.Count > 0)
+        {
+            nan.enabled = true;
+            isFree = false;
+        }
+        else
+        {
+            nan.enabled = false;
+            isFree = true;
+        }
     }
 }
