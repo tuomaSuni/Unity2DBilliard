@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RockLogic : MonoBehaviour
 {
+    public stateManager sm;
+    
     private Rigidbody2D rb;
     private Transform cue;
     private Transform line;
@@ -15,11 +17,8 @@ public class RockLogic : MonoBehaviour
     private bool isOnHand = true;
     private bool isFree = true;
     private bool initialClickReleased = false;
-    private bool isMoving = false;
     private Transform nan;
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
-
-    public stateManager sm;
     
     void Awake()
     {
@@ -33,6 +32,7 @@ public class RockLogic : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sm.listOfBalls.Add(rb);
 
         cue  = transform.GetChild(0).transform;
         line = transform.GetChild(1).transform;
@@ -63,27 +63,27 @@ public class RockLogic : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && !isMoving)
+        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped())
         {
             StartAiming();
         }
 
-        if (Input.GetMouseButtonUp(0) && !isOnHand)
+        if (Input.GetMouseButtonUp(0) && !isOnHand && sm.AllBallsHasStopped())
         {
             initialClickReleased = true;
         }
 
-        if (Input.GetMouseButtonUp(0) && !isOnHand && !isMoving && initialClickReleased)
+        if (Input.GetMouseButtonUp(0) && !isOnHand && initialClickReleased && sm.AllBallsHasStopped())
         {
             Shoot();
         }
 
-        if (!isOnHand && Input.GetMouseButtonDown(1) && !isMoving)
+        if (!isOnHand && Input.GetMouseButtonDown(1) && sm.AllBallsHasStopped())
         {
             ChargeShot();
         }
 
-        if (!isOnHand && Input.GetMouseButtonUp(1) && !isMoving)
+        if (!isOnHand && Input.GetMouseButtonUp(1) && sm.AllBallsHasStopped())
         {
             Shoot();
         }
@@ -91,7 +91,7 @@ public class RockLogic : MonoBehaviour
 
     private void HandlePushForce()
     {
-        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && !isMoving)
+        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped())
         {
             pushForce += Time.deltaTime * 20;
             cue.localPosition += Vector3.left * Time.deltaTime * 2;
@@ -100,10 +100,9 @@ public class RockLogic : MonoBehaviour
 
     private void HandleMovementState()
     {
-        if (!isOnHand && sm.AllBallsStopped())
+        if (!isOnHand && sm.AllBallsHasStopped())
         {
             SetVisibility(true);
-            isMoving = false;
         }
 
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
@@ -130,7 +129,6 @@ public class RockLogic : MonoBehaviour
         line.gameObject.SetActive(false);
         cue.localPosition = new Vector3(-18.75f, 0f, 0f);
         pushForce = 0;
-        isMoving = true;
     }
 
     private void ChargeShot()
@@ -178,5 +176,10 @@ public class RockLogic : MonoBehaviour
             nan.gameObject.SetActive(false);
             isFree = true;
         }
+    }
+
+    private void OnDestroy()
+    {
+        sm.listOfBalls.Remove(rb);
     }
 }

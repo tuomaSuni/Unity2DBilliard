@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class ballLogic : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public bool hasStopped = true;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private stateManager sm;
+    
+    void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        sm.listOfBalls.Add(GetComponent<Rigidbody2D>());
     }
     
-    void Update()
+    void OnDestroy()
     {
-        if (rb.velocity.magnitude < 0.01f) hasStopped = true;
-        else hasStopped = false;
+        sm.listOfBalls.Remove(GetComponent<Rigidbody2D>());
     }
 }

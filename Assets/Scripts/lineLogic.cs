@@ -51,6 +51,9 @@ public class LineLogic : MonoBehaviour
         Vector3 mousePosition = GetMouseWorldPosition();
         int dotCount = CalculateDotCount(mousePosition);
 
+        // Ensure one less dot is rendered so the last dot doesn't coincide with the end point
+        dotCount = Mathf.Max(dotCount - 1, 0);
+
         UpdateDotPool(dotCount);
         UpdateDots(dotCount, mousePosition);
         UpdateEndPoint(mousePosition);
@@ -78,13 +81,13 @@ public class LineLogic : MonoBehaviour
             CreateAndQueueDot();
         }
 
-        // Deactivate excess dots
+        // Deactivate all dots initially
         foreach (GameObject dot in dotPool)
         {
             dot.SetActive(false);
         }
 
-        // Activate dots needed
+        // Activate only the necessary dots
         int index = 0;
         foreach (GameObject dot in dotPool)
         {
@@ -106,7 +109,7 @@ public class LineLogic : MonoBehaviour
         {
             if (index >= dotCount) break;
 
-            Vector3 dotPosition = Vector3.Lerp(startPoint.position, mousePosition, (index + 1) / (float)dotCount);
+            Vector3 dotPosition = Vector3.Lerp(startPoint.position, mousePosition, (index + 1) / (float)(dotCount + 1));
             dot.transform.position = dotPosition;
             dot.transform.rotation = Quaternion.Euler(0, 0, angle);
 
