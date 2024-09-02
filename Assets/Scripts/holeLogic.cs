@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class HoleLogic : MonoBehaviour
 {
+    private AudioSource audiosource;
+
+    void Start()
+    {
+        audiosource = GetComponent<AudioSource>();
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         Bag(col);
         StartCoroutine(End(col));
+        audiosource.Play();
     }
 
     void Bag(Collision2D col)

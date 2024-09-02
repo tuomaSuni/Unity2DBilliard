@@ -19,6 +19,7 @@ public class RockLogic : MonoBehaviour
     private bool initialClickReleased = false;
     private Transform nan;
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
+    private AudioSource audiosource;
     
     void Awake()
     {
@@ -31,6 +32,7 @@ public class RockLogic : MonoBehaviour
 
     void Start()
     {
+        audiosource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         sm.listOfBalls.Add(rb);
 
@@ -129,6 +131,8 @@ public class RockLogic : MonoBehaviour
         line.gameObject.SetActive(false);
         cue.localPosition = new Vector3(-18.75f, 0f, 0f);
         pushForce = 0;
+
+        audiosource.Play();
     }
 
     private void ChargeShot()
