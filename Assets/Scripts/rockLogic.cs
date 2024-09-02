@@ -53,6 +53,11 @@ public class RockLogic : MonoBehaviour
             StartAiming();
         }
 
+        if (Input.GetMouseButtonUp(0) && !isOnHand)
+        {
+            initialClickReleased = true;
+        }
+
         if (Input.GetMouseButtonUp(0) && !isOnHand && !isMoving && initialClickReleased)
         {
             Shoot();
@@ -89,6 +94,7 @@ public class RockLogic : MonoBehaviour
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
         {
             SetVisibility(false);
+            Destroy(this);
         }
     }
 
@@ -96,7 +102,6 @@ public class RockLogic : MonoBehaviour
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
         isOnHand = false;
-        initialClickReleased = false;
         SetVisibility(true);
     }
 
