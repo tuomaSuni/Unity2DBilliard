@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class HoleLogic : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         Bag(col);
         StartCoroutine(End(col));
     }
 
-    void Bag(Collider2D col)
+    void Bag(Collision2D col)
     {
         col.gameObject.transform.position = transform.position;
         Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
@@ -19,9 +19,10 @@ public class HoleLogic : MonoBehaviour
         col.gameObject.transform.localScale *= 0.75f;
     }
 
-    IEnumerator End(Collider2D col)
+    IEnumerator End(Collision2D col)
     {
+        GameObject currentDestroyable = col.gameObject;
         yield return new WaitForSeconds(2.0f);
-        Destroy(col.gameObject);
+        Destroy(currentDestroyable);
     }
 }
