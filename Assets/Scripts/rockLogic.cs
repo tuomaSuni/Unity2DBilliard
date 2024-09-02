@@ -16,27 +16,31 @@ public class RockLogic : MonoBehaviour
     private bool isFree = true;
     private bool initialClickReleased = false;
     private bool isMoving = false;
-    private SpriteRenderer nan;
+    private Transform nan;
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
 
+    public stateManager sm;
+    
     void Awake()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 1f;
         transform.position = mousePosition;
+
+        nan  = transform.GetChild(2).transform;
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        cue = transform.GetChild(0).transform;
+        cue  = transform.GetChild(0).transform;
         line = transform.GetChild(1).transform;
-        nan = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>();
+        
 
         SetVisibility(false);
-        GetComponent<CircleCollider2D>().isTrigger = true;
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        GetComponent<CircleCollider2D>().isTrigger = true;
     }
 
     void Update()
@@ -96,7 +100,7 @@ public class RockLogic : MonoBehaviour
 
     private void HandleMovementState()
     {
-        if (!isOnHand && rb.velocity.magnitude < 0.01f)
+        if (!isOnHand && sm.AllBallsStopped())
         {
             SetVisibility(true);
             isMoving = false;
@@ -143,42 +147,35 @@ public class RockLogic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // Add the collider to the contact list
         collidersInContact.Add(col);
 
-        // Update the state based on contact
         UpdateState();
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        // Ensure the collider is in the contact list
         collidersInContact.Add(col);
 
-        // Update the state
         UpdateState();
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        // Remove the collider from the contact list
         collidersInContact.Remove(col);
 
-        // Update the state
         UpdateState();
     }
 
     private void UpdateState()
     {
-        // If there are any colliders still in contact, set the state accordingly
         if (collidersInContact.Count > 0)
         {
-            nan.enabled = true;
+            nan.gameObject.SetActive(true);
             isFree = false;
         }
         else
         {
-            nan.enabled = false;
+            nan.gameObject.SetActive(false);
             isFree = true;
         }
     }
