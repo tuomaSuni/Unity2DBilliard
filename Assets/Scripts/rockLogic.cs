@@ -5,7 +5,8 @@ using UnityEngine;
 public class RockLogic : MonoBehaviour
 {
     public stateManager sm;
-    
+    private LineLogic ll;
+
     private Rigidbody2D rb;
     private Transform cue;
     private Transform line;
@@ -43,6 +44,8 @@ public class RockLogic : MonoBehaviour
 
         audiosource = GetComponent<AudioSource>();
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+        ll = line.GetComponent<LineLogic>();
     }
 
     void Update()
@@ -123,8 +126,7 @@ public class RockLogic : MonoBehaviour
 
     private void Shoot()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dir = (mousePosition - rb.position).normalized;
+        dir = (ll.mousePosition - rb.position).normalized;
         rb.velocity = dir * pushForce;
 
         cue.gameObject.SetActive(false);

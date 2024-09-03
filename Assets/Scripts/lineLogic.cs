@@ -11,6 +11,7 @@ public class LineLogic : MonoBehaviour
 
     private Queue<GameObject> dotPool = new Queue<GameObject>();
     private GameObject endPoint;
+    public Vector2 mousePosition;
 
     private void Start()
     {
@@ -20,12 +21,20 @@ public class LineLogic : MonoBehaviour
 
     private void Update()
     {
-        HandleLineRendering();
+        if (!Input.GetMouseButton(0))
+        {
+            HandleLineRendering();
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.visible = true;
+        }
     }
 
     private void InitializeEndPoint()
     {
-        endPoint = Instantiate(endPointPrefab, Vector3.zero, Quaternion.identity);
+        endPoint = Instantiate(endPointPrefab, Vector2.zero, Quaternion.identity);
         endPoint.transform.SetParent(transform, false);
         endPoint.SetActive(false); // Initially inactive
     }
@@ -48,7 +57,7 @@ public class LineLogic : MonoBehaviour
 
     private void HandleLineRendering()
     {
-        Vector3 mousePosition = GetMouseWorldPosition();
+        mousePosition = GetMouseWorldPosition();
         int dotCount = CalculateDotCount(mousePosition);
 
         // Ensure one less dot is rendered so the last dot doesn't coincide with the end point
@@ -60,16 +69,15 @@ public class LineLogic : MonoBehaviour
         UpdateStartPoint(mousePosition);
     }
 
-    private Vector3 GetMouseWorldPosition()
+    private Vector2 GetMouseWorldPosition()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 1f; // Ensure the z-position is set correctly for 2D
-        return mousePosition;
+        Vector3 mousePosition3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return new Vector2(mousePosition3D.x, mousePosition3D.y);
     }
 
-    private int CalculateDotCount(Vector3 mousePosition)
+    private int CalculateDotCount(Vector2 mousePosition)
     {
-        float distance = Vector3.Distance(startPoint.position, mousePosition);
+        float distance = Vector2.Distance(startPoint.position, mousePosition);
         return Mathf.CeilToInt(distance / dotSpacing);
     }
 
@@ -99,9 +107,9 @@ public class LineLogic : MonoBehaviour
         }
     }
 
-    private void UpdateDots(int dotCount, Vector3 mousePosition)
+    private void UpdateDots(int dotCount, Vector2 mousePosition)
     {
-        Vector3 direction = (mousePosition - startPoint.position).normalized;
+        Vector2 direction = (mousePosition - (Vector2)startPoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         int index = 0;
@@ -109,24 +117,24 @@ public class LineLogic : MonoBehaviour
         {
             if (index >= dotCount) break;
 
-            Vector3 dotPosition = Vector3.Lerp(startPoint.position, mousePosition, (index + 1) / (float)(dotCount + 1));
-            dot.transform.position = dotPosition;
+            Vector2 dotPosition = Vector2.Lerp(startPoint.position, mousePosition, (index + 1) / (float)(dotCount + 1));
+            dot.transform.position = new Vector3(dotPosition.x, dotPosition.y, dot.transform.position.z);
             dot.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             index++;
         }
     }
 
-    private void UpdateEndPoint(Vector3 mousePosition)
+    private void UpdateEndPoint(Vector2 mousePosition)
     {
-        endPoint.transform.position = mousePosition;
+        endPoint.transform.position = new Vector3(mousePosition.x, mousePosition.y, endPoint.transform.position.z);
         endPoint.transform.rotation = Quaternion.identity;
         endPoint.SetActive(true);
     }
 
-    private void UpdateStartPoint(Vector3 mousePosition)
+    private void UpdateStartPoint(Vector2 mousePosition)
     {
-        Vector3 direction = (mousePosition - startPoint.position).normalized;
+        Vector2 direction = (mousePosition - (Vector2)startPoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         startPoint.rotation = Quaternion.Euler(0, 0, angle);
     }
