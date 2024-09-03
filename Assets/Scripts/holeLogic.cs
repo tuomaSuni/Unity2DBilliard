@@ -31,6 +31,9 @@ public class loleLogic : MonoBehaviour
     IEnumerator End(Collision2D col)
     {
         GameObject currentDestroyable = col.gameObject;
+
+        yield return new WaitForSeconds(2.0f);
+
         while (sm.AllBallsHasStopped() == false)
         {
             yield return null;

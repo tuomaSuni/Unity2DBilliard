@@ -19,6 +19,7 @@ public class rockLogic : MonoBehaviour
     private bool isFree = true;
     private bool initialClickReleased = false;
     private Transform nan;
+    private SpriteRenderer sr;
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     private AudioSource audiosource;
     
@@ -35,6 +36,7 @@ public class rockLogic : MonoBehaviour
         line = transform.GetChild(1).transform;
         nan  = transform.GetChild(2).transform;
 
+        sr = GetComponent<SpriteRenderer>();
         SetVisibility(false);
     }
 
@@ -43,6 +45,7 @@ public class rockLogic : MonoBehaviour
         sm.listOfBalls.Add(rb);
 
         audiosource = GetComponent<AudioSource>();
+        
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
         ll = line.GetComponent<lineLogic>();
@@ -183,11 +186,13 @@ public class rockLogic : MonoBehaviour
         if (collidersInContact.Count > 0)
         {
             nan.gameObject.SetActive(true);
+            SetAlpha(0.4f);
             isFree = false;
         }
         else
         {
             nan.gameObject.SetActive(false);
+            SetAlpha(1.0f);
             isFree = true;
         }
     }
@@ -195,5 +200,12 @@ public class rockLogic : MonoBehaviour
     private void OnDestroy()
     {
         sm.listOfBalls.Remove(rb);
+    }
+
+    private void SetAlpha(float alphaValue)
+    {
+        Color color = sr.color;
+        color.a = alphaValue;
+        sr.color = color;
     }
 }

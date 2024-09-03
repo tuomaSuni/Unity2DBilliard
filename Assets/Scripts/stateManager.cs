@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class stateManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class stateManager : MonoBehaviour
     private GameObject currentRock;
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
+    [SerializeField] private GameObject gamePanel;
+    [SerializeField] private Transform set;
+    private bool HasGameEnded = false;
+
     private void Start()
     {
         currentRock = Instantiate(rock, new Vector3(-5, 0, 0), Quaternion.identity);
@@ -16,12 +21,17 @@ public class stateManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentRock == null)
+        if (currentRock == null && !HasGameEnded)
         {
             currentRock = Instantiate(rock);
             currentRock.GetComponent<rockLogic>().sm = this;
         }
-        if (currentRock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+        if (currentRock == null == false && currentRock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+
+        if (set.childCount == 0)
+        {
+            EndGame();
+        }
     }
 
     public bool AllBallsHasStopped()
@@ -34,5 +44,17 @@ public class stateManager : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game"); 
+    }
+
+    public void EndGame()
+    {
+        HasGameEnded = true;
+        Destroy(currentRock);
+        gamePanel.SetActive(true);
     }
 }
