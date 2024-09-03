@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2276487259745366147}
   m_Layer: 0
   m_Name: rock
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   pushForce: 0
-  maxPushForce: 50
+  maxPushForce: 70
 --- !u!82 &2276487259745366147
 AudioSource:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 187544633365c6c46be70e76ce3db0bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

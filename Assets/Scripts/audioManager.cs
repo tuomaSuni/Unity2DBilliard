@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class audioManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] audioclips;
-    [SerializeField] private AudioSource audiosource;
+    private AudioSource audiosource;
     
     void Start()
     {
-        audiosource.clip = audioclips[Random.Range(0, 2)];
+        audiosource = GetComponent<AudioSource>();
         audiosource.Play();
     }
 }

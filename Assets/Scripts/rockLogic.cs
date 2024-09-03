@@ -27,22 +27,22 @@ public class RockLogic : MonoBehaviour
         mousePosition.z = 1f;
         transform.position = mousePosition;
 
+        rb = GetComponent<Rigidbody2D>();
+        GetComponent<CircleCollider2D>().isTrigger = true;
+
+        cue  = transform.GetChild(0).transform;
+        line = transform.GetChild(1).transform;
         nan  = transform.GetChild(2).transform;
+
+        SetVisibility(false);
     }
 
     void Start()
     {
-        audiosource = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody2D>();
         sm.listOfBalls.Add(rb);
 
-        cue  = transform.GetChild(0).transform;
-        line = transform.GetChild(1).transform;
-        
-
-        SetVisibility(false);
+        audiosource = GetComponent<AudioSource>();
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        GetComponent<CircleCollider2D>().isTrigger = true;
     }
 
     void Update()
@@ -95,7 +95,7 @@ public class RockLogic : MonoBehaviour
     {
         if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped())
         {
-            pushForce += Time.deltaTime * 20;
+            pushForce += Time.deltaTime * 30;
             cue.localPosition += Vector3.left * Time.deltaTime * 2;
         }
     }
@@ -130,9 +130,15 @@ public class RockLogic : MonoBehaviour
         cue.gameObject.SetActive(false);
         line.gameObject.SetActive(false);
         cue.localPosition = new Vector3(-18.75f, 0f, 0f);
-        pushForce = 0;
 
-        audiosource.Play();
+        if (pushForce > 0)
+        {
+            audiosource.volume = pushForce / maxPushForce;
+            audiosource.pitch = Random.Range(0.95f, 1.05f);
+            audiosource.Play();
+        }
+
+        pushForce = 0;
     }
 
     private void ChargeShot()
