@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockLogic : MonoBehaviour
+public class rockLogic : MonoBehaviour
 {
     public stateManager sm;
-    private LineLogic ll;
+    private lineLogic ll;
 
     private Rigidbody2D rb;
     private Transform cue;
@@ -45,7 +45,7 @@ public class RockLogic : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
-        ll = line.GetComponent<LineLogic>();
+        ll = line.GetComponent<lineLogic>();
     }
 
     void Update()
@@ -126,6 +126,8 @@ public class RockLogic : MonoBehaviour
 
     private void Shoot()
     {
+        Cursor.visible = true;
+        
         dir = (ll.mousePosition - rb.position).normalized;
         rb.velocity = dir * pushForce;
 

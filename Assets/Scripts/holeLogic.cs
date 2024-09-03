@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoleLogic : MonoBehaviour
+public class loleLogic : MonoBehaviour
 {
     private AudioSource audiosource;
+    [SerializeField] private stateManager sm;
 
     void Start()
     {
@@ -30,7 +31,10 @@ public class HoleLogic : MonoBehaviour
     IEnumerator End(Collision2D col)
     {
         GameObject currentDestroyable = col.gameObject;
-        yield return new WaitForSeconds(2.0f);
+        while (sm.AllBallsHasStopped() == false)
+        {
+            yield return null;
+        }
         Destroy(currentDestroyable);
     }
 }

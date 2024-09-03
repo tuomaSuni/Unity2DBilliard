@@ -11,7 +11,7 @@ public class stateManager : MonoBehaviour
     private void Start()
     {
         currentRock = Instantiate(rock, new Vector3(-5, 0, 0), Quaternion.identity);
-        currentRock.GetComponent<RockLogic>().sm = this;
+        currentRock.GetComponent<rockLogic>().sm = this;
     }
 
     private void Update()
@@ -19,7 +19,7 @@ public class stateManager : MonoBehaviour
         if (currentRock == null)
         {
             currentRock = Instantiate(rock);
-            currentRock.GetComponent<RockLogic>().sm = this;
+            currentRock.GetComponent<rockLogic>().sm = this;
         }
         if (currentRock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
     }

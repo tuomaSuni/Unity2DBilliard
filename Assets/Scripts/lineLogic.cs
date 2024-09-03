@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineLogic : MonoBehaviour
+public class lineLogic : MonoBehaviour
 {
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private GameObject endPointPrefab;
@@ -25,10 +25,6 @@ public class LineLogic : MonoBehaviour
         {
             HandleLineRendering();
             Cursor.visible = false;
-        }
-        else
-        {
-            Cursor.visible = true;
         }
     }
 
