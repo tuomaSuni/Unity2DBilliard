@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class stateManager : MonoBehaviour
 {
@@ -11,7 +10,8 @@ public class stateManager : MonoBehaviour
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private Transform set;
-    private bool HasGameEnded = false;
+    public bool HasGameEnded = false;
+    public bool HasGameWon;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class stateManager : MonoBehaviour
 
         if (set.childCount == 0)
         {
-            EndGame();
+            EndGame(true);
         }
     }
 
@@ -45,15 +45,10 @@ public class stateManager : MonoBehaviour
         }
         return true;
     }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene("Game"); 
-    }
-
-    public void EndGame()
+    public void EndGame(bool won)
     {
         HasGameEnded = true;
+        HasGameWon = won;
         Destroy(currentRock);
         gamePanel.SetActive(true);
     }
