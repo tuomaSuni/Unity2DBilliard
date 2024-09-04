@@ -579,7 +579,7 @@ MonoBehaviour:
   gamePanel: {fileID: 126503946}
   set: {fileID: 9084195954668230436}
   HasGameEnded: 0
-  HasGameWon: 0
+  HasPlayerWon: 0
 --- !u!4 &510562932
 Transform:
   m_ObjectHideFlags: 0
@@ -1531,6 +1531,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 5635902237733790706, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: sm
+      value: 
+      objectReference: {fileID: 510562931}
     - target: {fileID: 6134752993795830672, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1575,15 +1579,7 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
-    - target: {fileID: 7470476196016071418, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
-      propertyPath: sm
-      value: 
-      objectReference: {fileID: 510562931}
     - target: {fileID: 7475438027397329589, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
-      propertyPath: sm
-      value: 
-      objectReference: {fileID: 510562931}
-    - target: {fileID: 7816695493807698043, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}

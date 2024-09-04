@@ -11,7 +11,7 @@ public class stateManager : MonoBehaviour
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private Transform set;
     public bool HasGameEnded = false;
-    public bool HasGameWon;
+    public bool HasPlayerWon;
 
     private void Start()
     {
@@ -27,11 +27,6 @@ public class stateManager : MonoBehaviour
             currentRock.GetComponent<rockLogic>().sm = this;
         }
         if (currentRock == null == false && currentRock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
-
-        if (set.childCount == 0)
-        {
-            EndGame(true);
-        }
     }
 
     public bool AllBallsHasStopped()
@@ -45,10 +40,23 @@ public class stateManager : MonoBehaviour
         }
         return true;
     }
-    public void EndGame(bool won)
+
+    public int BallBagged(int index)
+    {
+        return index;
+    }
+
+    public void CheckGameState()
+    {
+        if (listOfBalls.Count == 1 && listOfBalls[0] == currentRock.GetComponent<Rigidbody2D>()) EndGame(true);    
+        else EndGame(false);
+    }
+
+    private void EndGame(bool playerWon)
     {
         HasGameEnded = true;
-        HasGameWon = won;
+        HasPlayerWon = playerWon;
+        
         Destroy(currentRock);
         gamePanel.SetActive(true);
     }

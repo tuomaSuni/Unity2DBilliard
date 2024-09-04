@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class ballLogic : MonoBehaviour
 {
-    [SerializeField] private stateManager sm;
+    [SerializeField] protected stateManager sm;
     private AudioSource ballimpact;
     [SerializeField] private AudioClip[] audioclips;
     private Rigidbody2D rb;
-    void Start()
+
+    private void Awake()
+    {
+        sm.listOfBalls.Add(GetComponent<Rigidbody2D>());
+    }
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         ballimpact = GetComponent<AudioSource>();
     }
-    void Awake()
-    {
-        sm.listOfBalls.Add(GetComponent<Rigidbody2D>());
-    }
-    
-    void OnDestroy()
-    {
-        sm.listOfBalls.Remove(GetComponent<Rigidbody2D>());
-    }
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball") && !ballimpact.isPlaying)
         {
@@ -32,5 +29,13 @@ public class ballLogic : MonoBehaviour
             ballimpact.pitch = Random.Range(0.8f, 0.9f);
             ballimpact.Play();
         }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        #if UNITY_EDITOR // Function for Debugging.
+        if (sm.listOfBalls.Contains(rb))
+        sm.listOfBalls.Remove(rb);
+        #endif
     }
 }

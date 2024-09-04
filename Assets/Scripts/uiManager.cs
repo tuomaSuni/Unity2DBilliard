@@ -11,7 +11,7 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
-        if (sm.HasGameEnded) info.text = "you won. play again?";
+        if (sm.HasPlayerWon) info.text = "you won. play again?";
         else info.text = "you lost. play again?";
     }
 

@@ -7,28 +7,30 @@ public class loleLogic : MonoBehaviour
     private AudioSource audiosource;
     [SerializeField] private stateManager sm;
 
-    void Start()
+    private void Start()
     {
         audiosource = GetComponent<AudioSource>();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         Bag(col);
         StartCoroutine(End(col));
         audiosource.Play();
     }
 
-    void Bag(Collision2D col)
+    private void Bag(Collision2D col)
     {
         col.gameObject.transform.position = transform.position;
+        
         Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero;
-        
+        sm.listOfBalls.Remove(rb);
+
         col.gameObject.transform.localScale *= 0.75f;
     }
 
-    IEnumerator End(Collision2D col)
+    private IEnumerator End(Collision2D col)
     {
         GameObject currentDestroyable = col.gameObject;
 
@@ -38,6 +40,7 @@ public class loleLogic : MonoBehaviour
         {
             yield return null;
         }
+        
         Destroy(currentDestroyable);
     }
 }
