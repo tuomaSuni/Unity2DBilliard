@@ -31,7 +31,7 @@ public class ballLogic : MonoBehaviour
         }
     }
 
-    protected virtual void OnDestroy()
+    protected virtual void OnDisable()
     {
         #if UNITY_EDITOR // Function for Debugging.
         if (sm.listOfBalls.Contains(rb))

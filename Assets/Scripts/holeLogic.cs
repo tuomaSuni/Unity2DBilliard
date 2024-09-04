@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class loleLogic : MonoBehaviour
+public class holeLogic : MonoBehaviour
 {
-    private AudioSource audiosource;
     [SerializeField] private stateManager sm;
+    private AudioSource audiosource;
 
     private void Start()
     {
@@ -41,6 +41,6 @@ public class loleLogic : MonoBehaviour
             yield return null;
         }
         
-        Destroy(currentDestroyable);
+        currentDestroyable.SetActive(false);
     }
 }

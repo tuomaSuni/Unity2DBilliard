@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class lineLogic : MonoBehaviour
 {
+    [Header("Dependencies")]
+    public stateManager sm;
+
+    [Header("Utilities")]
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private GameObject endPointPrefab;
     [SerializeField] private Transform startPoint;
@@ -21,7 +25,7 @@ public class lineLogic : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1) && sm.isInteractable)
         {
             HandleLineRendering();
             Cursor.visible = false;

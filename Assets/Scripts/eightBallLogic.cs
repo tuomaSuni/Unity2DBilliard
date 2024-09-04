@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class eightBallLogic : ballLogic
 {    
-    protected override void OnDestroy()
+    protected override void OnDisable()
     {
-        if (sm != null) sm.CheckGameState();
+        base.OnDisable();
+        sm.CheckGameState();
     }
 }

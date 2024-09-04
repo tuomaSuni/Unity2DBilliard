@@ -32,8 +32,13 @@ public class uiManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab) && sm.isInteractable)
         {
-            rotationPanel.SetActive(!rotationPanel.activeSelf);
-            sm.SetRotationPanel();
+            ActivateRotationPanel();
         }
+    }
+
+    private void ActivateRotationPanel()
+    {
+        rotationPanel.SetActive(!rotationPanel.activeSelf);
+        Cursor.visible = !Cursor.visible;
     }
 }

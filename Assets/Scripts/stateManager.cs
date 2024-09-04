@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class stateManager : MonoBehaviour
 {
-    [SerializeField] private GameObject rock;
-    private GameObject currentRock;
-    [SerializeField] private BoxCollider2D limit;
+    [Header("Balls")]
+    [SerializeField] private GameObject Rock;
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
+
+    [HideInInspector] public bool HasGameEnded = false;
+    [HideInInspector] public bool isInteractable = false;
+    [HideInInspector] public bool HasPlayerWon;
+
+    [Header("GameObjects")]
+    [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
     [SerializeField] private Transform set;
-    public bool HasGameEnded = false;
-    public bool isInteractable = false;
-    public bool HasPlayerWon;
-    
-    private void Awake()
-    {
-        currentRock = Instantiate(rock, new Vector3(-5, 0, 0), Quaternion.identity);
-        currentRock.GetComponent<rockLogic>().sm = this;
-    }
 
     private void Update()
     {
-        if (currentRock == null && HasGameEnded == false)
+        if (!Rock.activeSelf)
         {
-            currentRock = Instantiate(rock);
-            currentRock.GetComponent<rockLogic>().sm = this;
+            Rock.SetActive(true);
+            Rock.GetComponent<rockLogic>().enabled = true;
         }
-        if (currentRock == null == false && currentRock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+
+        if (Rock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
     }
 
     public bool AllBallsHasStopped()
@@ -42,14 +40,9 @@ public class stateManager : MonoBehaviour
         return true;
     }
 
-    public int BallBagged(int index)
-    {
-        return index;
-    }
-
     public void CheckGameState()
     {
-        if (listOfBalls.Count == 1 && listOfBalls[0] == currentRock.GetComponent<Rigidbody2D>()) EndGame(true);    
+        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>()) EndGame(true);    
         else EndGame(false);
     }
 
@@ -57,16 +50,17 @@ public class stateManager : MonoBehaviour
     {
         HasGameEnded = true;
         HasPlayerWon = playerWon;
-        
-        uim.GameEnd();
-        
-        Destroy(currentRock);
-        Destroy(this);
+
+        CleanUp();
     }
 
-    public void SetRotationPanel()
+    private void CleanUp()
     {
-        currentRock.GetComponent<rockLogic>().enabled = !currentRock.GetComponent<rockLogic>().enabled;
-        currentRock.transform.GetChild(1).GetComponent<lineLogic>().enabled = !currentRock.transform.GetChild(1).GetComponent<lineLogic>().enabled;
+        if (uim != null)
+        {
+            uim.GameEnd();
+            Destroy(uim);
+        }
+        Destroy(this);
     }
 }

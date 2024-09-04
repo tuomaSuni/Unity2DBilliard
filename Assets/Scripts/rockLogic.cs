@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class rockLogic : MonoBehaviour
 {
+    [Header("Dependencies")]
     public stateManager sm;
     
-    private GameObject cue;
-    private GameObject line;
-    private GameObject nan;
-
-    private Rigidbody2D rb;
+    [Header("GameObjects")]
+    [SerializeField] private GameObject cue;
+    [SerializeField] private GameObject line;
+    [SerializeField] private GameObject mark;
+    
+    [Header("Settings")]
     [SerializeField] private float pushForce = 0f;
     [SerializeField] private float maxPushForce = 50.0f;
 
-    private Vector2 dir;
-    private bool isOnHand = true;
+    [Header("Booleans")]
     private bool isFree = true;
+    private bool isOnHand = true;
     private bool initialClickReleased = false;
     
     private SpriteRenderer sr;
@@ -24,33 +26,30 @@ public class rockLogic : MonoBehaviour
     private AudioSource audiosource;
 
     private lineLogic ll;
-    
+
+    private Rigidbody2D rb;
+    private Vector2 dir;
+
     void Awake()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 1f;
-        transform.position = mousePosition;
-
-        rb = GetComponent<Rigidbody2D>();
-        GetComponent<CircleCollider2D>().isTrigger = true;
-
-        cue  = transform.GetChild(0).gameObject;
-        line = transform.GetChild(1).gameObject;
-        nan  = transform.GetChild(2).gameObject;
-
-        sr = GetComponent<SpriteRenderer>();
-        ll = line.GetComponent<lineLogic>();
-        
-    }
-
-    void Start()
-    {
-        sm.listOfBalls.Add(rb);
+        rb   = GetComponent<Rigidbody2D>();
+        sr   = GetComponent<SpriteRenderer>();
+        ll   = line.GetComponent<lineLogic>();
 
         audiosource = GetComponent<AudioSource>();
-        
+    }
+
+    void OnEnable()
+    {
+        isFree = true;
+        isOnHand = true;
+        initialClickReleased = false;
+
+        sm.listOfBalls.Add(rb);
+
+        GetComponent<CircleCollider2D>().isTrigger = true;
+
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        SetVisibility(false);
     }
 
     void Update()
@@ -71,37 +70,9 @@ public class rockLogic : MonoBehaviour
         }
     }
 
-    private void HandleShooting()
-    {
-        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped() && sm.HasGameEnded == false)
-        {
-            StartAiming();
-        }
-
-        if (Input.GetMouseButtonUp(0) && !isOnHand && sm.AllBallsHasStopped())
-        {
-            initialClickReleased = true;
-        }
-
-        if (Input.GetMouseButtonUp(0) && !isOnHand && initialClickReleased && sm.AllBallsHasStopped())
-        {
-            Shoot();
-        }
-
-        if (!isOnHand && Input.GetMouseButtonDown(1) && sm.AllBallsHasStopped())
-        {
-            ChargeShot();
-        }
-
-        if (!isOnHand && Input.GetMouseButtonUp(1) && sm.AllBallsHasStopped())
-        {
-            Shoot();
-        }
-    }
-
     private void HandlePushForce()
     {
-        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped())
+        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped() && !sm.isInteractable)
         {
             pushForce += Time.deltaTime * 30;
             cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
@@ -118,7 +89,7 @@ public class rockLogic : MonoBehaviour
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
         {
             SetVisibility(false);
-            Destroy(this);
+            this.enabled = false;
         }
     }
 
@@ -126,18 +97,16 @@ public class rockLogic : MonoBehaviour
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
         isOnHand = false;
-        SetVisibility(true);
     }
 
     private void Shoot()
     {
         Cursor.visible = true;
+        SetVisibility(false);
+        cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
         
         dir = (ll.mousePosition - rb.position).normalized;
         rb.velocity = dir * pushForce;
-
-        SetVisibility(false);
-        cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
 
         if (pushForce > 0)
         {
@@ -185,23 +154,21 @@ public class rockLogic : MonoBehaviour
 
     private void UpdateState()
     {
-        if (collidersInContact.Count > 0)
+        if (this.enabled)
         {
-            nan.SetActive(true);
-            SetAlpha(0.4f);
-            isFree = false;
+            if (collidersInContact.Count > 0)
+            {
+                mark.SetActive(true);
+                SetAlpha(0.7f);
+                isFree = false;
+            }
+            else
+            {
+                mark.SetActive(false);
+                SetAlpha(1.0f);
+                isFree = true;
+            }
         }
-        else
-        {
-            nan.SetActive(false);
-            SetAlpha(1.0f);
-            isFree = true;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        sm.listOfBalls.Remove(rb);
     }
 
     private void SetAlpha(float alphaValue)
@@ -210,4 +177,34 @@ public class rockLogic : MonoBehaviour
         color.a = alphaValue;
         sr.color = color;
     }
+
+    // INPUT LOGIC //
+    private void HandleShooting()
+    {
+        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped() && sm.HasGameEnded == false)
+        {
+            StartAiming();
+        }
+
+        if (Input.GetMouseButtonUp(0) && !isOnHand && sm.AllBallsHasStopped())
+        {
+            initialClickReleased = true;
+        }
+
+        if (Input.GetMouseButtonUp(0) && !isOnHand && initialClickReleased && sm.AllBallsHasStopped())
+        {
+            Shoot();
+        }
+
+        if (!isOnHand && Input.GetMouseButtonDown(1) && sm.AllBallsHasStopped() && !sm.isInteractable)
+        {
+            ChargeShot();
+        }
+
+        if (!isOnHand && Input.GetMouseButtonUp(1) && sm.AllBallsHasStopped())
+        {
+            Shoot();
+        }
+    }
+    // INPUT LOGIC //
 }
