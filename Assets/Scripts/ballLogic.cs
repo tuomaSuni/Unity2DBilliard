@@ -26,7 +26,7 @@ public class ballLogic : MonoBehaviour
         {
             ballimpact.clip = audioclips[Random.Range(0, 2)];
             ballimpact.volume = rb.velocity.magnitude / 10;
-            ballimpact.pitch = Random.Range(0.8f, 0.9f);
+            ballimpact.pitch = Random.Range(0.9f, 1.0f);
             ballimpact.Play();
         }
     }

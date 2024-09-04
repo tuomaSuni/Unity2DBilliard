@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class uiManager : MonoBehaviour
 {
     [SerializeField] stateManager sm;
     [SerializeField] private TextMeshProUGUI info;
+    [SerializeField] GameObject rotationPanel;
+    [SerializeField] GameObject GameEndPanel;
 
-    private void Awake()
+    public void GameEnd()
     {
+        GameEndPanel.SetActive(true);
         if (sm.HasPlayerWon) info.text = "you won. play again?";
         else info.text = "you lost. play again?";
     }
@@ -22,5 +26,14 @@ public class uiManager : MonoBehaviour
     public void GoBackToMenu()
     {
         SceneManager.LoadScene("Menu"); 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) && sm.isInteractable)
+        {
+            rotationPanel.SetActive(!rotationPanel.activeSelf);
+            sm.SetRotationPanel();
+        }
     }
 }

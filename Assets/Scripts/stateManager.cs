@@ -8,12 +8,13 @@ public class stateManager : MonoBehaviour
     private GameObject currentRock;
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
-    [SerializeField] private GameObject gamePanel;
+    [SerializeField] private uiManager uim;
     [SerializeField] private Transform set;
     public bool HasGameEnded = false;
+    public bool isInteractable = false;
     public bool HasPlayerWon;
-
-    private void Start()
+    
+    private void Awake()
     {
         currentRock = Instantiate(rock, new Vector3(-5, 0, 0), Quaternion.identity);
         currentRock.GetComponent<rockLogic>().sm = this;
@@ -21,7 +22,7 @@ public class stateManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentRock == null && !HasGameEnded)
+        if (currentRock == null && HasGameEnded == false)
         {
             currentRock = Instantiate(rock);
             currentRock.GetComponent<rockLogic>().sm = this;
@@ -57,7 +58,15 @@ public class stateManager : MonoBehaviour
         HasGameEnded = true;
         HasPlayerWon = playerWon;
         
+        uim.GameEnd();
+        
         Destroy(currentRock);
-        gamePanel.SetActive(true);
+        Destroy(this);
+    }
+
+    public void SetRotationPanel()
+    {
+        currentRock.GetComponent<rockLogic>().enabled = !currentRock.GetComponent<rockLogic>().enabled;
+        currentRock.transform.GetChild(1).GetComponent<lineLogic>().enabled = !currentRock.transform.GetChild(1).GetComponent<lineLogic>().enabled;
     }
 }

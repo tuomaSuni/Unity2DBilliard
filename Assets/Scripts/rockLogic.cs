@@ -5,12 +5,12 @@ using UnityEngine;
 public class rockLogic : MonoBehaviour
 {
     public stateManager sm;
-    private lineLogic ll;
+    
+    private GameObject cue;
+    private GameObject line;
+    private GameObject nan;
 
     private Rigidbody2D rb;
-    private Transform cue;
-    private Transform line;
-
     [SerializeField] private float pushForce = 0f;
     [SerializeField] private float maxPushForce = 50.0f;
 
@@ -18,10 +18,12 @@ public class rockLogic : MonoBehaviour
     private bool isOnHand = true;
     private bool isFree = true;
     private bool initialClickReleased = false;
-    private Transform nan;
+    
     private SpriteRenderer sr;
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     private AudioSource audiosource;
+
+    private lineLogic ll;
     
     void Awake()
     {
@@ -32,12 +34,13 @@ public class rockLogic : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         GetComponent<CircleCollider2D>().isTrigger = true;
 
-        cue  = transform.GetChild(0).transform;
-        line = transform.GetChild(1).transform;
-        nan  = transform.GetChild(2).transform;
+        cue  = transform.GetChild(0).gameObject;
+        line = transform.GetChild(1).gameObject;
+        nan  = transform.GetChild(2).gameObject;
 
         sr = GetComponent<SpriteRenderer>();
-        SetVisibility(false);
+        ll = line.GetComponent<lineLogic>();
+        
     }
 
     void Start()
@@ -47,8 +50,7 @@ public class rockLogic : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
         
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-
-        ll = line.GetComponent<lineLogic>();
+        SetVisibility(false);
     }
 
     void Update()
@@ -71,7 +73,7 @@ public class rockLogic : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped())
+        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped() && sm.HasGameEnded == false)
         {
             StartAiming();
         }
@@ -102,7 +104,7 @@ public class rockLogic : MonoBehaviour
         if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped())
         {
             pushForce += Time.deltaTime * 30;
-            cue.localPosition += Vector3.left * Time.deltaTime * 2;
+            cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
         }
     }
 
@@ -134,9 +136,8 @@ public class rockLogic : MonoBehaviour
         dir = (ll.mousePosition - rb.position).normalized;
         rb.velocity = dir * pushForce;
 
-        cue.gameObject.SetActive(false);
-        line.gameObject.SetActive(false);
-        cue.localPosition = new Vector3(-18.75f, 0f, 0f);
+        SetVisibility(false);
+        cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
 
         if (pushForce > 0)
         {
@@ -151,13 +152,14 @@ public class rockLogic : MonoBehaviour
     private void ChargeShot()
     {
         pushForce = maxPushForce;
-        cue.localPosition += Vector3.left * 4;
+        cue.transform.localPosition += Vector3.left * 4;
     }
 
     private void SetVisibility(bool visibility)
     {
-        cue.gameObject.SetActive(visibility);
-        line.gameObject.SetActive(visibility);
+        cue.SetActive(visibility);
+        line.SetActive(visibility);
+        sm.isInteractable = visibility;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -185,13 +187,13 @@ public class rockLogic : MonoBehaviour
     {
         if (collidersInContact.Count > 0)
         {
-            nan.gameObject.SetActive(true);
+            nan.SetActive(true);
             SetAlpha(0.4f);
             isFree = false;
         }
         else
         {
-            nan.gameObject.SetActive(false);
+            nan.SetActive(false);
             SetAlpha(1.0f);
             isFree = true;
         }

@@ -357,7 +357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3062365661029813855}
-  - component: {fileID: 6476960154749281226}
+  - component: {fileID: 4112084955833845758}
   m_Layer: 0
   m_Name: line
   m_TagString: Untagged
@@ -374,13 +374,13 @@ Transform:
   m_GameObject: {fileID: 2693509587919850284}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.5, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7188506511621459976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6476960154749281226
+--- !u!114 &4112084955833845758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,6 +397,7 @@ MonoBehaviour:
   startPoint: {fileID: 7188506511621459976}
   dotSpacing: 0.5
   initialPoolSize: 10
+  mousePosition: {x: 0, y: 0}
 --- !u!1 &6386364875832393353
 GameObject:
   m_ObjectHideFlags: 0

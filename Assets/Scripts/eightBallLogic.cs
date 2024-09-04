@@ -6,6 +6,6 @@ public class eightBallLogic : ballLogic
 {    
     protected override void OnDestroy()
     {
-        sm.CheckGameState();
+        if (sm != null) sm.CheckGameState();
     }
 }
