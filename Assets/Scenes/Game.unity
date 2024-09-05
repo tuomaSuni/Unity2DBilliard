@@ -181,7 +181,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sm: {fileID: 510562931}
-  rotationVector: {x: 0, y: 0}
   rotator: {fileID: 1776046970}
 --- !u!1 &126503946
 GameObject:
@@ -404,6 +403,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1839944874}
     m_Modifications:
+    - target: {fileID: 709916192231545349, guid: e4385983e9a6ec149904b635cfe20063, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6211785129072488359, guid: e4385983e9a6ec149904b635cfe20063, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1625,6 +1628,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1839944874}
     m_Modifications:
+    - target: {fileID: 1325205662524836043, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325205662524836043, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_Name
       value: rock
@@ -1637,6 +1648,10 @@ PrefabInstance:
       propertyPath: rm
       value: 
       objectReference: {fileID: 81863074}
+    - target: {fileID: 2264178564907980822, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: sm
+      value: 
+      objectReference: {fileID: 510562931}
     - target: {fileID: 2264178564907980822, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1721,6 +1736,10 @@ PrefabInstance:
       propertyPath: mark
       value: 
       objectReference: {fileID: 1403698312}
+    - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: maxPushForce
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1838,6 +1857,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 1200813466947693943, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2210997695905027215, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: m_Name
       value: set
@@ -1854,10 +1877,34 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 3039581613360941097, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093598481474424622, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3186489255355010252, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 3256802694533323794, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319690540286888016, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528598038043346501, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613339037855349120, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4069396844720583102, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -1870,10 +1917,18 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 4568803143486123565, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4576258816067827381, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 4936219481500633652, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5191882178104677041, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -1882,6 +1937,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 5528078993716782785, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5635902237733790706, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -1930,10 +1989,30 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 7190069777933762059, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7254710882835540644, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7475438027397329589, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 7832013733300376036, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562077776007706245, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062035808240286998, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

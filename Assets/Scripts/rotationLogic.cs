@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rotationLogic : MonoBehaviour
 {
+    [SerializeField] private stateManager sm;
     [SerializeField] private rotationManager rm;
     public Vector2 rotationVector;
     public void ResetRotation()
@@ -13,6 +14,6 @@ public class rotationLogic : MonoBehaviour
 
     void Update ()
     {
-        rotationVector = rm.rotator.anchoredPosition / 10f;
+        if (sm.isSettingRotation) rotationVector = rm.rotator.anchoredPosition;
     }
 }

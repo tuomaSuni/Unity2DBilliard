@@ -22,12 +22,14 @@ public class rockLogic : MonoBehaviour
     private bool isFree = true;
     private bool isOnHand = true;
     private bool initialClickReleased = false;
-    
+    private int collisionsSince = 0;
     private SpriteRenderer sr;
     private AudioSource audiosource;
     
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
-    private Vector2 dir;
+    [Header("Directions")]
+    private Vector2 dir_paraller;
+    private Vector2 dir_perpendicular;
     private Rigidbody2D rb;
 
     void Awake()
@@ -52,6 +54,8 @@ public class rockLogic : MonoBehaviour
         GetComponent<CircleCollider2D>().isTrigger = true;
 
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+        collisionsSince = 0;
     }
 
     void Update()
@@ -84,8 +88,9 @@ public class rockLogic : MonoBehaviour
         cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
 
         SetVelocity();
-        PlaySoundEffect();
+        
         rl.ResetRotation();
+        PlaySoundEffect();
     }
 
     private void PlaySoundEffect()
@@ -97,8 +102,10 @@ public class rockLogic : MonoBehaviour
 
     private void SetVelocity()
     {
-        dir = (ll.mousePosition - rb.position).normalized;
-        rb.velocity = dir * pushForce;
+        dir_paraller = (ll.mousePosition - rb.position).normalized;
+        dir_perpendicular = new Vector2(dir_paraller.y, -dir_paraller.x);
+
+        rb.velocity = dir_paraller * pushForce;
 
         pushForce = 0;
     }
@@ -134,6 +141,13 @@ public class rockLogic : MonoBehaviour
         collidersInContact.Remove(col);
 
         UpdateState();
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (collisionsSince == 0) StartCoroutine(AddRotation());
+
+        collisionsSince += 1;
     }
 
     private void UpdateState()
@@ -203,12 +217,26 @@ public class rockLogic : MonoBehaviour
         if (!this.isOnHand && sm.AllBallsHasStopped())
         {
             SetCueAndLineVisibility(true);
+            collisionsSince = 0;
         }
 
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
         {
             SetCueAndLineVisibility(false);
             this.enabled = false;
+        }
+    }
+
+    private IEnumerator AddRotation()
+    {
+        int initialVelocity = (int)(Mathf.Pow(rb.velocity.magnitude, 0.3f) * 30);
+
+        for (int i = 0; i < initialVelocity; i++)
+        {
+            rb.AddForce(initialVelocity * Mathf.Pow(rb.velocity.magnitude, 0.15f) * rl.rotationVector.y * dir_paraller * 2f * Time.deltaTime);
+            rb.AddForce(initialVelocity * Mathf.Pow(rb.velocity.magnitude, 0.20f) * rl.rotationVector.x * dir_perpendicular * Time.deltaTime);
+
+            yield return null;
         }
     }
 }
