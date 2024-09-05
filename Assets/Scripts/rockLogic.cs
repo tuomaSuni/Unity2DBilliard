@@ -6,7 +6,9 @@ public class rockLogic : MonoBehaviour
 {
     [Header("Dependencies")]
     public stateManager sm;
-    
+    private lineLogic ll;
+    private rotationLogic rl;
+
     [Header("GameObjects")]
     [SerializeField] private GameObject cue;
     [SerializeField] private GameObject line;
@@ -22,19 +24,19 @@ public class rockLogic : MonoBehaviour
     private bool initialClickReleased = false;
     
     private SpriteRenderer sr;
-    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     private AudioSource audiosource;
-
-    private lineLogic ll;
-
-    private Rigidbody2D rb;
+    
+    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     private Vector2 dir;
+    private Rigidbody2D rb;
 
     void Awake()
     {
+        ll   = line.GetComponent<lineLogic>();
+        rl   = GetComponent<rotationLogic>();
         rb   = GetComponent<Rigidbody2D>();
         sr   = GetComponent<SpriteRenderer>();
-        ll   = line.GetComponent<lineLogic>();
+        
 
         audiosource = GetComponent<AudioSource>();
     }
@@ -56,13 +58,12 @@ public class rockLogic : MonoBehaviour
     {
         HandleAiming();
         HandleShooting();
-        HandlePushForce();
         HandleMovementState();
     }
 
     private void HandleAiming()
     {
-        if (isOnHand)
+        if (this.isOnHand && !sm.isSettingRotation)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 1f;
@@ -70,50 +71,34 @@ public class rockLogic : MonoBehaviour
         }
     }
 
-    private void HandlePushForce()
-    {
-        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped() && !sm.isInteractable)
-        {
-            pushForce += Time.deltaTime * 30;
-            cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
-        }
-    }
-
-    private void HandleMovementState()
-    {
-        if (!isOnHand && sm.AllBallsHasStopped())
-        {
-            SetVisibility(true);
-        }
-
-        if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
-        {
-            SetVisibility(false);
-            this.enabled = false;
-        }
-    }
-
     private void StartAiming()
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
-        isOnHand = false;
+        this.isOnHand = false;
     }
 
     private void Shoot()
     {
         Cursor.visible = true;
-        SetVisibility(false);
+        SetCueAndLineVisibility(false);
         cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
-        
+
+        SetVelocity();
+        PlaySoundEffect();
+        rl.ResetRotation();
+    }
+
+    private void PlaySoundEffect()
+    {
+        audiosource.volume = pushForce / maxPushForce;
+        audiosource.pitch = Random.Range(0.95f, 1.05f);
+        audiosource.Play();
+    }
+
+    private void SetVelocity()
+    {
         dir = (ll.mousePosition - rb.position).normalized;
         rb.velocity = dir * pushForce;
-
-        if (pushForce > 0)
-        {
-            audiosource.volume = pushForce / maxPushForce;
-            audiosource.pitch = Random.Range(0.95f, 1.05f);
-            audiosource.Play();
-        }
 
         pushForce = 0;
     }
@@ -124,11 +109,10 @@ public class rockLogic : MonoBehaviour
         cue.transform.localPosition += Vector3.left * 4;
     }
 
-    private void SetVisibility(bool visibility)
+    private void SetCueAndLineVisibility(bool visibility)
     {
         cue.SetActive(visibility);
         line.SetActive(visibility);
-        sm.isInteractable = visibility;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -178,33 +162,53 @@ public class rockLogic : MonoBehaviour
         sr.color = color;
     }
 
-    // INPUT LOGIC //
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0) && isOnHand && isFree && sm.AllBallsHasStopped() && sm.HasGameEnded == false)
+        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped() && !sm.isSettingRotation)
         {
-            StartAiming();
+            pushForce += Time.deltaTime * 30;
+            cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
         }
 
-        if (Input.GetMouseButtonUp(0) && !isOnHand && sm.AllBallsHasStopped())
+        if (sm.AllBallsHasStopped() && !sm.isSettingRotation)
+        {
+            if (Input.GetMouseButtonDown(0) && this.isOnHand && isFree)
+            {
+                StartAiming();
+            }
+
+            if (Input.GetMouseButtonUp(0)   && !this.isOnHand && initialClickReleased)
+            {
+                Shoot();
+            }
+
+            if (Input.GetMouseButtonDown(1) && !this.isOnHand && !sm.isSettingRotation)
+            {
+                ChargeShot();
+            }
+
+            if (Input.GetMouseButtonUp(1)   && !this.isOnHand)
+            {
+                Shoot();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0) && !this.isOnHand && sm.AllBallsHasStopped())
         {
             initialClickReleased = true;
         }
-
-        if (Input.GetMouseButtonUp(0) && !isOnHand && initialClickReleased && sm.AllBallsHasStopped())
+    }
+    private void HandleMovementState()
+    {
+        if (!this.isOnHand && sm.AllBallsHasStopped())
         {
-            Shoot();
+            SetCueAndLineVisibility(true);
         }
 
-        if (!isOnHand && Input.GetMouseButtonDown(1) && sm.AllBallsHasStopped() && !sm.isInteractable)
+        if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
         {
-            ChargeShot();
-        }
-
-        if (!isOnHand && Input.GetMouseButtonUp(1) && sm.AllBallsHasStopped())
-        {
-            Shoot();
+            SetCueAndLineVisibility(false);
+            this.enabled = false;
         }
     }
-    // INPUT LOGIC //
 }

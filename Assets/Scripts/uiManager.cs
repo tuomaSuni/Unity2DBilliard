@@ -30,7 +30,7 @@ public class uiManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && sm.isInteractable)
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             ActivateRotationPanel();
         }
@@ -39,6 +39,7 @@ public class uiManager : MonoBehaviour
     private void ActivateRotationPanel()
     {
         rotationPanel.SetActive(!rotationPanel.activeSelf);
-        Cursor.visible = !Cursor.visible;
+        sm.isSettingRotation = !sm.isSettingRotation;
+        Cursor.visible = true;
     }
 }

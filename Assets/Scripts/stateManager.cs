@@ -8,9 +8,9 @@ public class stateManager : MonoBehaviour
     [SerializeField] private GameObject Rock;
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
 
-    [HideInInspector] public bool HasGameEnded = false;
-    [HideInInspector] public bool isInteractable = false;
     [HideInInspector] public bool HasPlayerWon;
+    [HideInInspector] public bool HasGameEnded = false;
+    [HideInInspector] public bool isSettingRotation = false;
 
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
@@ -61,6 +61,12 @@ public class stateManager : MonoBehaviour
             uim.GameEnd();
             Destroy(uim);
         }
+
+        if (Rock != null)
+        {
+            Destroy(Rock);
+        }
+
         Destroy(this);
     }
 }

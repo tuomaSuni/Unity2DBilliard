@@ -11,11 +11,11 @@ public class lineLogic : MonoBehaviour
     [SerializeField] private GameObject endPointPrefab;
     [SerializeField] private Transform startPoint;
     [SerializeField] private float dotSpacing;
-    [SerializeField] private int initialPoolSize = 10;
+    private int initialPoolSize = 10;
 
     private Queue<GameObject> dotPool = new Queue<GameObject>();
     private GameObject endPoint;
-    public Vector2 mousePosition;
+    [HideInInspector] public Vector2 mousePosition;
 
     private void Start()
     {
@@ -25,7 +25,10 @@ public class lineLogic : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1) && sm.isInteractable)
+        bool isSettingRotation = sm.isSettingRotation;
+        bool noMouseButtonsPressed = !Input.GetMouseButton(0) && !Input.GetMouseButton(1);
+
+        if (sm.isSettingRotation || noMouseButtonsPressed)
         {
             HandleLineRendering();
             Cursor.visible = false;
