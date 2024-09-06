@@ -6,7 +6,8 @@ public class rotationLogic : MonoBehaviour
 {
     [SerializeField] private stateManager sm;
     [SerializeField] private rotationManager rm;
-    public Vector2 rotationVector;
+    [HideInInspector] public Vector2 rotationVector;
+    
     public void ResetRotation()
     {
         rm.ResetRotationAmount();

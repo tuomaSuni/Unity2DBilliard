@@ -5,15 +5,14 @@ using UnityEngine;
 public class rockLogic : MonoBehaviour
 {
     [Header("Dependencies")]
-    public stateManager sm;
-    private lineLogic ll;
-    private rotationLogic rl;
+    public stateManager stateManager;
+    private lineLogic lineLogic;
+    private rotationLogic rotationLogic;
 
     [Header("GameObjects")]
     [SerializeField] private GameObject cue;
     [SerializeField] private GameObject line;
-    [SerializeField] private GameObject mark;
-    
+
     [Header("Settings")]
     [SerializeField] private float pushForce = 0f;
     [SerializeField] private float maxPushForce = 50.0f;
@@ -22,44 +21,50 @@ public class rockLogic : MonoBehaviour
     private bool isFree = true;
     private bool isOnHand = true;
     private bool initialClickReleased = false;
-    private int collisionsSince = 0;
-    private SpriteRenderer sr;
-    private AudioSource audiosource;
+
+    [Header("References")]
+    private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+    private Rigidbody2D rigidbody2D;
     
-    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     [Header("Directions")]
-    private Vector2 dir_paraller;
-    private Vector2 dir_perpendicular;
-    private Rigidbody2D rb;
+    private Vector2 parallelDirection;
+    private Vector2 perpendicularDirection;
 
-    void Awake()
+    [Header("Velocities")]
+    private float rockVelocity;
+    private float velocityOnImpact;
+
+    [Header("Physics")]
+    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
+    private int collisionsCount = 0;
+
+    private void Awake()
     {
-        ll   = line.GetComponent<lineLogic>();
-        rl   = GetComponent<rotationLogic>();
-        rb   = GetComponent<Rigidbody2D>();
-        sr   = GetComponent<SpriteRenderer>();
-        
-
-        audiosource = GetComponent<AudioSource>();
+        // Initialize component references
+        lineLogic = line.GetComponent<lineLogic>();
+        rotationLogic = GetComponent<rotationLogic>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        isFree = true;
-        isOnHand = true;
-        initialClickReleased = false;
-
-        sm.listOfBalls.Add(rb);
-
+        // Reset variables on enable
+        ResetRockState();
+        stateManager.listOfBalls.Add(rigidbody2D);
         GetComponent<CircleCollider2D>().isTrigger = true;
-
+        collisionsCount = 0;
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-
-        collisionsSince = 0;
     }
 
-    void Update()
+    private void Update()
     {
+        // Track velocity
+        rockVelocity = rigidbody2D.velocity.magnitude;
+
+        // Handle user inputs and actions
         HandleAiming();
         HandleShooting();
         HandleMovementState();
@@ -67,10 +72,11 @@ public class rockLogic : MonoBehaviour
 
     private void HandleAiming()
     {
-        if (this.isOnHand && !sm.isSettingRotation)
+        if (isOnHand && !stateManager.isSettingRotation)
         {
+            // Move rock with mouse if on hand
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 1f;
+            mousePosition.z = 1f;  // Keep the rock on the same Z plane
             transform.position = mousePosition;
         }
     }
@@ -78,7 +84,7 @@ public class rockLogic : MonoBehaviour
     private void StartAiming()
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
-        this.isOnHand = false;
+        isOnHand = false;
     }
 
     private void Shoot()
@@ -87,26 +93,17 @@ public class rockLogic : MonoBehaviour
         SetCueAndLineVisibility(false);
         cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
 
-        SetVelocity();
-        
-        rl.ResetRotation();
-        PlaySoundEffect();
+        ApplyShotForce();
+        rotationLogic.ResetRotation();
+        PlayShotSound();
     }
 
-    private void PlaySoundEffect()
+    private void ApplyShotForce()
     {
-        audiosource.volume = pushForce / maxPushForce;
-        audiosource.pitch = Random.Range(0.95f, 1.05f);
-        audiosource.Play();
-    }
+        parallelDirection = (lineLogic.mousePosition - rigidbody2D.position).normalized;
+        perpendicularDirection = new Vector2(parallelDirection.y, -parallelDirection.x);
 
-    private void SetVelocity()
-    {
-        dir_paraller = (ll.mousePosition - rb.position).normalized;
-        dir_perpendicular = new Vector2(dir_paraller.y, -dir_paraller.x);
-
-        rb.velocity = dir_paraller * pushForce;
-
+        rigidbody2D.velocity = parallelDirection * pushForce;
         pushForce = 0;
     }
 
@@ -116,108 +113,73 @@ public class rockLogic : MonoBehaviour
         cue.transform.localPosition += Vector3.left * 4;
     }
 
-    private void SetCueAndLineVisibility(bool visibility)
+    private void PlayShotSound()
     {
-        cue.SetActive(visibility);
-        line.SetActive(visibility);
+        audioSource.volume = pushForce / maxPushForce;
+        audioSource.pitch = Random.Range(0.95f, 1.05f);
+        audioSource.Play();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void SetCueAndLineVisibility(bool isVisible)
     {
-        collidersInContact.Add(col);
-
-        UpdateState();
-    }
-
-    void OnTriggerStay2D(Collider2D col)
-    {
-        collidersInContact.Add(col);
-
-        UpdateState();
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
-        collidersInContact.Remove(col);
-
-        UpdateState();
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (collisionsSince == 0) StartCoroutine(AddRotation());
-
-        collisionsSince += 1;
-    }
-
-    private void UpdateState()
-    {
-        if (this.enabled)
-        {
-            if (collidersInContact.Count > 0)
-            {
-                mark.SetActive(true);
-                SetAlpha(0.7f);
-                isFree = false;
-            }
-            else
-            {
-                mark.SetActive(false);
-                SetAlpha(1.0f);
-                isFree = true;
-            }
-        }
-    }
-
-    private void SetAlpha(float alphaValue)
-    {
-        Color color = sr.color;
-        color.a = alphaValue;
-        sr.color = color;
+        cue.SetActive(isVisible);
+        line.SetActive(isVisible);
     }
 
     private void HandleShooting()
     {
-        if (initialClickReleased && Input.GetMouseButton(0) && pushForce < maxPushForce && sm.AllBallsHasStopped() && !sm.isSettingRotation)
+        if (initialClickReleased && Input.GetMouseButton(0) && CanChargeShot())
         {
+            // Charge shot logic
             pushForce += Time.deltaTime * 30;
             cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
         }
 
-        if (sm.AllBallsHasStopped() && !sm.isSettingRotation)
+        if (CanShoot())
         {
-            if (Input.GetMouseButtonDown(0) && this.isOnHand && isFree)
+            if (Input.GetMouseButtonDown(0) && isOnHand && isFree)
             {
                 StartAiming();
             }
 
-            if (Input.GetMouseButtonUp(0)   && !this.isOnHand && initialClickReleased)
+            if (Input.GetMouseButtonUp(0) && !isOnHand && initialClickReleased)
             {
                 Shoot();
             }
 
-            if (Input.GetMouseButtonDown(1) && !this.isOnHand && !sm.isSettingRotation)
+            if (Input.GetMouseButtonDown(1) && !isOnHand)
             {
                 ChargeShot();
             }
 
-            if (Input.GetMouseButtonUp(1)   && !this.isOnHand)
+            if (Input.GetMouseButtonUp(1) && !isOnHand)
             {
                 Shoot();
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && !this.isOnHand && sm.AllBallsHasStopped())
+        if (Input.GetMouseButtonUp(0) && !isOnHand && stateManager.AllBallsHasStopped())
         {
             initialClickReleased = true;
         }
     }
+
+    private bool CanChargeShot()
+    {
+        return pushForce < maxPushForce && stateManager.AllBallsHasStopped() && !stateManager.isSettingRotation;
+    }
+
+    private bool CanShoot()
+    {
+        return stateManager.AllBallsHasStopped() && !stateManager.isSettingRotation;
+    }
+
     private void HandleMovementState()
     {
-        if (!this.isOnHand && sm.AllBallsHasStopped())
+        if (!isOnHand && stateManager.AllBallsHasStopped())
         {
             SetCueAndLineVisibility(true);
-            collisionsSince = 0;
+            collisionsCount = 0;
         }
 
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
@@ -227,16 +189,70 @@ public class rockLogic : MonoBehaviour
         }
     }
 
-    private IEnumerator AddRotation()
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        int initialVelocity = (int)(Mathf.Pow(rb.velocity.magnitude, 0.3f) * 30);
+        collidersInContact.Add(collider);
+        UpdateRockState();
+    }
 
-        for (int i = 0; i < initialVelocity; i++)
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        collidersInContact.Add(collider);
+        UpdateRockState();
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        collidersInContact.Remove(collider);
+        UpdateRockState();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collisionsCount == 0)
         {
-            rb.AddForce(initialVelocity * Mathf.Pow(rb.velocity.magnitude, 0.15f) * rl.rotationVector.y * dir_paraller * 2f * Time.deltaTime);
-            rb.AddForce(initialVelocity * Mathf.Pow(rb.velocity.magnitude, 0.20f) * rl.rotationVector.x * dir_perpendicular * Time.deltaTime);
+            StartCoroutine(ApplyRotationOnImpact());
+        }
+        collisionsCount++;
+    }
 
+    private void UpdateRockState()
+    {
+        if (collidersInContact.Count > 0)
+        {
+            SetRockTransparency(0.7f);
+            isFree = false;
+        }
+        else
+        {
+            SetRockTransparency(1.0f);
+            isFree = true;
+        }
+    }
+
+    private void SetRockTransparency(float alpha)
+    {
+        Color color = spriteRenderer.color;
+        color.a = alpha;
+        spriteRenderer.color = color;
+    }
+
+    private IEnumerator ApplyRotationOnImpact()
+    {
+        velocityOnImpact = rockVelocity;
+
+        for (int i = 0; i < velocityOnImpact; i++)
+        {
+            rigidbody2D.AddForce(3 * velocityOnImpact * rotationLogic.rotationVector.y * parallelDirection * Time.deltaTime);
+            rigidbody2D.AddForce(3 * velocityOnImpact * rotationLogic.rotationVector.x * perpendicularDirection * Time.deltaTime);
             yield return null;
         }
+    }
+
+    private void ResetRockState()
+    {
+        isFree = true;
+        isOnHand = true;
+        initialClickReleased = false;
     }
 }
