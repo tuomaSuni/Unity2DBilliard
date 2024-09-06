@@ -23,23 +23,20 @@ public class uiManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game"); 
     }
+
     public void GoBackToMenu()
     {
         SceneManager.LoadScene("Menu"); 
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            ActivateRotationPanel();
-        }
     }
 
     private void ActivateRotationPanel()
     {
         rotationPanel.SetActive(!rotationPanel.activeSelf);
         sm.isSettingRotation = !sm.isSettingRotation;
-        Cursor.visible = true;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) && sm.UIisInteractable) ActivateRotationPanel();
     }
 }

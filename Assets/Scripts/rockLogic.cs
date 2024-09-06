@@ -13,58 +13,58 @@ public class rockLogic : MonoBehaviour
     [SerializeField] private GameObject cue;
     [SerializeField] private GameObject line;
 
-    [Header("Settings")]
-    [SerializeField] private float pushForce = 0f;
-    [SerializeField] private float maxPushForce = 50.0f;
+    // Settings //
+    private float pushForce = 0f;
+    private readonly float maxPushForce = 50.0f;
+    private readonly float rotationForce = 1.2f;
 
-    [Header("Booleans")]
+    // Booleans //
     private bool isFree = true;
     private bool isOnHand = true;
     private bool initialClickReleased = false;
+    private bool isAiming = false;
 
-    [Header("References")]
+    // References //
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rb2D;
     
-    [Header("Directions")]
+    // Directions //
     private Vector2 parallelDirection;
     private Vector2 perpendicularDirection;
 
-    [Header("Velocities")]
+    // Velocities //
     private float rockVelocity;
     private float velocityOnImpact;
 
-    [Header("Physics")]
+    // Physics //
     private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
-    private int collisionsCount = 0;
+    private bool hasCollided = false;
 
     private void Awake()
     {
-        // Initialize component references
         lineLogic = line.GetComponent<lineLogic>();
         rotationLogic = GetComponent<rotationLogic>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
     {
-        // Reset variables on enable
         ResetRockState();
-        stateManager.listOfBalls.Add(rigidbody2D);
+        isAiming = false;
+        stateManager.listOfBalls.Add(rb2D);
         GetComponent<CircleCollider2D>().isTrigger = true;
-        collisionsCount = 0;
+        hasCollided = false;
+        stateManager.UIisInteractable = false;
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
     }
 
     private void Update()
     {
-        // Track velocity
-        rockVelocity = rigidbody2D.velocity.magnitude;
-
-        // Handle user inputs and actions
+        rockVelocity = rb2D.velocity.magnitude;
+        
         HandleAiming();
         HandleShooting();
         HandleMovementState();
@@ -72,11 +72,10 @@ public class rockLogic : MonoBehaviour
 
     private void HandleAiming()
     {
-        if (isOnHand && !stateManager.isSettingRotation)
+        if (isOnHand)
         {
-            // Move rock with mouse if on hand
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 1f;  // Keep the rock on the same Z plane
+            mousePosition.z = 1f;
             transform.position = mousePosition;
         }
     }
@@ -85,25 +84,31 @@ public class rockLogic : MonoBehaviour
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
         isOnHand = false;
+        stateManager.UIisInteractable = true;
+        Cursor.visible = false;
     }
 
     private void Shoot()
     {
+        if (rotationLogic.rotationVector.y < 0) rb2D.drag -= rotationLogic.rotationVector.y / 30f;
+        if (rotationLogic.rotationVector.y > 0) rb2D.drag -= rotationLogic.rotationVector.y / 60f;
+
         Cursor.visible = true;
         SetCueAndLineVisibility(false);
+        isAiming = false;
+
         cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
 
-        ApplyShotForce();
-        rotationLogic.ResetRotation();
         PlayShotSound();
+        ApplyShotForce();
     }
 
     private void ApplyShotForce()
     {
-        parallelDirection = (lineLogic.mousePosition - rigidbody2D.position).normalized;
+        parallelDirection = (lineLogic.mousePosition - rb2D.position).normalized;
         perpendicularDirection = new Vector2(parallelDirection.y, -parallelDirection.x);
 
-        rigidbody2D.velocity = parallelDirection * pushForce;
+        rb2D.velocity = parallelDirection * pushForce;
         pushForce = 0;
     }
 
@@ -130,7 +135,6 @@ public class rockLogic : MonoBehaviour
     {
         if (initialClickReleased && Input.GetMouseButton(0) && CanChargeShot())
         {
-            // Charge shot logic
             pushForce += Time.deltaTime * 30;
             cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
         }
@@ -176,10 +180,14 @@ public class rockLogic : MonoBehaviour
 
     private void HandleMovementState()
     {
-        if (!isOnHand && stateManager.AllBallsHasStopped())
+        if (!isAiming && !isOnHand && stateManager.AllBallsHasStopped())
         {
+            isAiming = true;
             SetCueAndLineVisibility(true);
-            collisionsCount = 0;
+            hasCollided = false;
+            rb2D.drag = 1;
+            rotationLogic.ResetRotation();
+            if (!stateManager.isSettingRotation) Cursor.visible = false;
         }
 
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
@@ -209,11 +217,14 @@ public class rockLogic : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collisionsCount == 0)
+        if (hasCollided == false)
         {
+            rb2D.drag = 1;
+
             StartCoroutine(ApplyRotationOnImpact());
         }
-        collisionsCount++;
+
+        hasCollided = true;
     }
 
     private void UpdateRockState()
@@ -241,10 +252,10 @@ public class rockLogic : MonoBehaviour
     {
         velocityOnImpact = rockVelocity;
 
-        for (int i = 0; i < velocityOnImpact; i++)
+        for (int i=0; i < velocityOnImpact * rotationForce; i++)
         {
-            rigidbody2D.AddForce(3 * velocityOnImpact * rotationLogic.rotationVector.y * parallelDirection * Time.deltaTime);
-            rigidbody2D.AddForce(3 * velocityOnImpact * rotationLogic.rotationVector.x * perpendicularDirection * Time.deltaTime);
+            rb2D.AddForce(velocityOnImpact * rotationForce * rotationLogic.rotationVector.y * parallelDirection      * Time.deltaTime);
+            rb2D.AddForce(velocityOnImpact * rotationForce * rotationLogic.rotationVector.x * perpendicularDirection * Time.deltaTime);
             yield return null;
         }
     }

@@ -11,6 +11,7 @@ public class rotationLogic : MonoBehaviour
     public void ResetRotation()
     {
         rm.ResetRotationAmount();
+        rotationVector = Vector2.zero;
     }
 
     void Update ()

@@ -31,7 +31,6 @@ public class lineLogic : MonoBehaviour
         if (sm.isSettingRotation || noMouseButtonsPressed)
         {
             HandleLineRendering();
-            Cursor.visible = false;
         }
     }
 

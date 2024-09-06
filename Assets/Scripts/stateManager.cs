@@ -11,6 +11,7 @@ public class stateManager : MonoBehaviour
     [HideInInspector] public bool HasPlayerWon;
     [HideInInspector] public bool HasGameEnded = false;
     [HideInInspector] public bool isSettingRotation = false;
+    [HideInInspector] public bool UIisInteractable = false;
 
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
