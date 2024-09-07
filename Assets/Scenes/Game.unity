@@ -570,7 +570,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 513751331}
         m_TargetAssemblyTypeName: uiManager, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 513751331}
         m_TargetAssemblyTypeName: uiManager, Assembly-CSharp
         m_MethodName: GoBackToMenu
         m_Mode: 1
@@ -1643,7 +1643,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1325205662524836043, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_LinearDrag
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_Name
@@ -1657,6 +1657,18 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 2387367015178273305, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693509587919850284, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3227561290050431278, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: sm
       value: 
@@ -1710,17 +1722,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: maxPushForce
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: stateManager
       value: 
       objectReference: {fileID: 510562931}
     - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: rotationForce
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 2061421594}
   m_SourcePrefab: {fileID: 100100000, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
 --- !u!4 &2061421586 stripped
 Transform:
@@ -1732,6 +1751,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
   m_PrefabInstance: {fileID: 2061421585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2061421594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061421587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e907cddc5aae4094799ed7d942b29ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaceable: 1
 --- !u!1001 &3009722689588141334
 PrefabInstance:
   m_ObjectHideFlags: 0

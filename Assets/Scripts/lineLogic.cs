@@ -17,10 +17,12 @@ public class lineLogic : MonoBehaviour
     private GameObject endPoint;
     [HideInInspector] public Vector2 mousePosition;
 
-    private void Start()
+    private void Awake()
     {
         InitializeEndPoint();
         InitializeDotPool();
+
+        HandleLineRendering();
     }
 
     private void Update()
@@ -38,7 +40,7 @@ public class lineLogic : MonoBehaviour
     {
         endPoint = Instantiate(endPointPrefab, Vector2.zero, Quaternion.identity);
         endPoint.transform.SetParent(transform, false);
-        endPoint.SetActive(false); // Initially inactive
+        endPoint.SetActive(false);
     }
 
     private void InitializeDotPool()
@@ -62,7 +64,6 @@ public class lineLogic : MonoBehaviour
         mousePosition = GetMouseWorldPosition();
         int dotCount = CalculateDotCount(mousePosition);
 
-        // Ensure one less dot is rendered so the last dot doesn't coincide with the end point
         dotCount = Mathf.Max(dotCount - 1, 0);
 
         UpdateDotPool(dotCount);
@@ -85,19 +86,16 @@ public class lineLogic : MonoBehaviour
 
     private void UpdateDotPool(int requiredCount)
     {
-        // Add more dots if needed
         while (dotPool.Count < requiredCount)
         {
             CreateAndQueueDot();
         }
 
-        // Deactivate all dots initially
         foreach (GameObject dot in dotPool)
         {
             dot.SetActive(false);
         }
 
-        // Activate only the necessary dots
         int index = 0;
         foreach (GameObject dot in dotPool)
         {
