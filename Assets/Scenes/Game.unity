@@ -731,6 +731,8 @@ MonoBehaviour:
   HasGameEnded: 0
   isSettingRotation: 0
   UIisInteractable: 0
+  isChargeable: 0
+  isCharged: 0
   limit: {fileID: 1052703438}
   uim: {fileID: 513751331}
   set: {fileID: 9084195954668230436}
@@ -1731,7 +1733,7 @@ PrefabInstance:
       objectReference: {fileID: 510562931}
     - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: rotationForce
-      value: 1.2
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

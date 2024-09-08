@@ -12,6 +12,8 @@ public class stateManager : MonoBehaviour
     [HideInInspector] public bool HasGameEnded = false;
     [HideInInspector] public bool isSettingRotation = false;
     [HideInInspector] public bool UIisInteractable = false;
+    [HideInInspector] public bool isChargeable = false;
+    [HideInInspector] public bool isCharged = false;
 
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;

@@ -27,10 +27,7 @@ public class lineLogic : MonoBehaviour
 
     private void Update()
     {
-        bool isSettingRotation = sm.isSettingRotation;
-        bool noMouseButtonsPressed = !Input.GetMouseButton(0) && !Input.GetMouseButton(1);
-
-        if (sm.isSettingRotation || noMouseButtonsPressed)
+        if (!sm.isCharged)
         {
             HandleLineRendering();
         }

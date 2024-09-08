@@ -33,6 +33,7 @@ public class uiManager : MonoBehaviour
     {
         rotationPanel.SetActive(!rotationPanel.activeSelf);
         sm.isSettingRotation = !sm.isSettingRotation;
+        sm.isChargeable = false;
     }
 
     private void Update()
