@@ -1058,7 +1058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6134752993795830672}
   m_Layer: 0
-  m_Name: set
+  m_Name: eight_set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

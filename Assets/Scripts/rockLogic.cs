@@ -120,7 +120,7 @@ public class rockLogic : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && !isOnHand && stateManager.AllBallsHasStopped())
+        if (Input.GetMouseButtonUp(0) && !isOnHand)
         {
             stateManager.isChargeable = true;
         }

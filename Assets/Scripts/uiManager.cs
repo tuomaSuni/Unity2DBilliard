@@ -19,16 +19,6 @@ public class uiManager : MonoBehaviour
         else info.text = "you lost. play again?";
     }
 
-    public void RestartGame()
-    {
-        SceneManager.LoadScene("Game"); 
-    }
-
-    public void GoBackToMenu()
-    {
-        SceneManager.LoadScene("Menu"); 
-    }
-
     private void ActivateRotationPanel()
     {
         rotationPanel.SetActive(!rotationPanel.activeSelf);
@@ -39,5 +29,6 @@ public class uiManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && sm.UIisInteractable) ActivateRotationPanel();
+        if (Input.GetKeyDown(KeyCode.Escape) && sm.UIisInteractable) GameEnd();
     }
 }

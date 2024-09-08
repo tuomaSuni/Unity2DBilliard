@@ -8,6 +8,7 @@ public class stateManager : MonoBehaviour
     [SerializeField] private GameObject Rock;
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
 
+    [Header("Booleans")]
     [HideInInspector] public bool HasPlayerWon;
     [HideInInspector] public bool HasGameEnded = false;
     [HideInInspector] public bool isSettingRotation = false;
@@ -19,17 +20,6 @@ public class stateManager : MonoBehaviour
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
     [SerializeField] private Transform set;
-
-    private void Update()
-    {
-        if (!Rock.activeSelf)
-        {
-            Rock.SetActive(true);
-            Rock.GetComponent<rockLogic>().enabled = true;
-        }
-
-        if (Rock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
-    }
 
     public bool AllBallsHasStopped()
     {
@@ -43,11 +33,28 @@ public class stateManager : MonoBehaviour
         return true;
     }
 
-    public void CheckGameState()
+    private void Update()
+    {
+        if (!Rock.activeSelf)
+        {
+            Rock.SetActive(true);
+            Rock.GetComponent<rockLogic>().enabled = true;
+        }
+
+        if (Rock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+    }
+
+    public void CheckEightballGameState()
     {
         if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>()) EndGame(true);    
         else EndGame(false);
     }
+
+    public void CheckNineballGameState()
+    {
+        EndGame(true);
+    }
+
 
     private void EndGame(bool playerWon)
     {
