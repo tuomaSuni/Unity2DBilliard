@@ -164,8 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &7311711360362773063
 AudioSource:
   m_ObjectHideFlags: 0
@@ -466,8 +466,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &8135919902450816942
 AudioSource:
   m_ObjectHideFlags: 0
@@ -728,8 +728,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &3833913865853272197
 AudioSource:
   m_ObjectHideFlags: 0
@@ -990,8 +990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &7945455382254237724
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1252,8 +1252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &6410604375292288396
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1514,8 +1514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &648151179912427888
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1776,8 +1776,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &4970278209247661707
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2038,8 +2038,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &174493545737564848
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2300,8 +2300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
   audioclips:
-  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
   - {fileID: 8300000, guid: c168bdd8d973f654fbeb62fe28082f55, type: 3}
+  - {fileID: 8300000, guid: 43e88b40b0d2838498b59fca77c30a0c, type: 3}
 --- !u!82 &5942708089255915253
 AudioSource:
   m_ObjectHideFlags: 0

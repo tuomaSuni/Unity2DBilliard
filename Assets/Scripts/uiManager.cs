@@ -14,16 +14,18 @@ public class uiManager : MonoBehaviour
 
     public void GameEnd()
     {
-        GameEndPanel.SetActive(true);
+        GameEndPanel.SetActive(!GameEndPanel.activeSelf);
+        sm.isSettingRotation = !sm.isSettingRotation;
         if (sm.HasPlayerWon) info.text = "you won. play again?";
         else info.text = "you lost. play again?";
     }
 
-    private void ActivateRotationPanel()
+    public void ActivateRotationPanel()
     {
         rotationPanel.SetActive(!rotationPanel.activeSelf);
         sm.isSettingRotation = !sm.isSettingRotation;
         sm.isChargeable = false;
+        sm.UIisInteractable = !sm.UIisInteractable;
     }
 
     private void Update()

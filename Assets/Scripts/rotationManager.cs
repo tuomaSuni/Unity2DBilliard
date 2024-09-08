@@ -6,12 +6,14 @@ using UnityEngine.EventSystems;
 public class rotationManager : MonoBehaviour
 {
     [SerializeField] private stateManager sm;
-    
+    [SerializeField] private uiManager uim;
+
     public RectTransform rotator;
 
     private void Update()
     {
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() && sm.AllBallsHasStopped()) SetRotationAmount();
+        if (Input.GetKeyDown(KeyCode.Escape)) uim.ActivateRotationPanel();
     }
 
     private void SetRotationAmount()

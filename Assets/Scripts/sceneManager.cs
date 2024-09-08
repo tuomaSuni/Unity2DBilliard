@@ -16,6 +16,10 @@ public class sceneManager : MonoBehaviour
         PlayerPrefs.SetInt("Type", gametype);
         SceneManager.LoadScene("Game"); 
     }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game"); 
+    }
     public void GoToLobby()
     {
         SceneManager.LoadScene("Lobby");
