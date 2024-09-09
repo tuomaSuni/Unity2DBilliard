@@ -16,8 +16,12 @@ public class uiManager : MonoBehaviour
     {
         GameEndPanel.SetActive(!GameEndPanel.activeSelf);
         sm.isSettingRotation = !sm.isSettingRotation;
-        if (sm.HasPlayerWon) info.text = "you won. play again?";
-        else info.text = "you lost. play again?";
+
+        if (sm.HasGameEnded)
+        {
+            if (sm.HasPlayerWon) info.text = "you won. play again?";
+            else info.text = "you lost. play again?";
+        }
     }
 
     public void ActivateRotationPanel()

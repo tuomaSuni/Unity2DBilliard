@@ -10,4 +10,9 @@ public class gameManager : MonoBehaviour
     {
         sets.GetChild(PlayerPrefs.GetInt("Type")).gameObject.SetActive(true);
     }
+
+    void Start()
+    {
+        
+    }
 }
