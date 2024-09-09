@@ -18,7 +18,9 @@ public class sceneManager : MonoBehaviour
     public void StartGame(int gametype)
     {
         PlayerPrefs.SetInt("Type", gametype);
-        StartCoroutine(FadeOut("Game"));
+        
+        if (PlayerPrefs.GetInt("Mode") == 2) StartCoroutine(FadeOut("Lobby"));
+        else StartCoroutine(FadeOut("Game"));
     }
     public void LoadScene(string scene)
     {
