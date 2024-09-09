@@ -10,4 +10,9 @@ public class menuManager : MonoBehaviour
         PlayerPrefs.SetInt("Mode", gamemode);
         type.SetActive(true);
     }
+
+    public void PreviousSet()
+    {
+        type.SetActive(false);
+    }
 }
