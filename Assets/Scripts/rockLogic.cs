@@ -19,7 +19,7 @@ public class rockLogic : MonoBehaviour
 
     [Range(50f, 70f)]
     [SerializeField] private float maxPushForce  = 50.0f;
-    [SerializeField] private float rotationForce = 10.0f;
+    [SerializeField] private float rotationForce = 9.0f;
 
     // Booleans //
     private bool isOnHand = true;
@@ -135,7 +135,6 @@ public class rockLogic : MonoBehaviour
         GetComponent<CircleCollider2D>().isTrigger = false;
         isOnHand = false;
         Cursor.visible = false;
-
         sm.UIisInteractable = true;
     }
 
@@ -207,6 +206,7 @@ public class rockLogic : MonoBehaviour
         {
             SetCueAndLineVisibility(false);
             Cursor.visible = true;
+            sm.UIisInteractable = false;
             this.enabled = false;
         }
     }

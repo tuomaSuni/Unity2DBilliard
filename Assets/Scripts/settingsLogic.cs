@@ -8,4 +8,9 @@ public class settingsLogic : MonoBehaviour
     {
         gameObject.SetActive(!gameObject.activeSelf);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) OpenSettingsTab();
+    }
 }

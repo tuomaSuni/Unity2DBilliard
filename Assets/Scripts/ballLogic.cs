@@ -9,15 +9,15 @@ public class ballLogic : MonoBehaviour
     [SerializeField] private AudioClip[] audioclips;
     private Rigidbody2D rb;
 
-    private void Awake()
-    {
-        sm.listOfBalls.Add(GetComponent<Rigidbody2D>());
-    }
-
-    private void Start()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         ballimpact = GetComponent<AudioSource>();
+    }
+
+    protected void Start()
+    {
+        sm.listOfBalls.Add(rb);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -31,11 +31,20 @@ public class ballLogic : MonoBehaviour
         }
     }
 
+    // Functions for Debugging.
     protected virtual void OnDisable()
     {
-        #if UNITY_EDITOR // Function for Debugging.
+        #if UNITY_EDITOR
         if (sm.listOfBalls.Contains(rb))
         sm.listOfBalls.Remove(rb);
         #endif
     }
+
+    #if UNITY_EDITOR
+    void OnDestroy()
+    {
+        if (sm.listOfBalls.Contains(rb))
+        sm.listOfBalls.Remove(rb);
+    }
+    #endif
 }

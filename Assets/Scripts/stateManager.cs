@@ -67,13 +67,13 @@ public class stateManager : MonoBehaviour
     {
         if (uim != null)
         {
-            uim.GameEnd();
+            uim.ActivateMenuPanel();
             Destroy(uim);
         }
 
         if (Rock != null)
         {
-            Destroy(Rock);
+            Rock.GetComponent<rockLogic>().enabled = false;
         }
 
         Destroy(this);

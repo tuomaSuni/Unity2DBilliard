@@ -10,13 +10,13 @@ public class uiManager : MonoBehaviour
     [SerializeField] stateManager sm;
     [SerializeField] private TextMeshProUGUI info;
     [SerializeField] GameObject rotationPanel;
-    [SerializeField] GameObject GameEndPanel;
+    [SerializeField] GameObject menuPanel;
 
-    public void GameEnd()
+    public void ActivateMenuPanel()
     {
         SetUIactive();
         
-        GameEndPanel.SetActive(!GameEndPanel.activeSelf);
+        menuPanel.SetActive(!menuPanel.activeSelf);
 
         if (sm.HasGameEnded)
         {
@@ -35,15 +35,16 @@ public class uiManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && sm.UIisInteractable) ActivateRotationPanel();
-        if (Input.GetKeyDown(KeyCode.Escape) && sm.UIisInteractable) GameEnd();
+        if (Input.GetKeyDown(KeyCode.Escape) && sm.UIisInteractable) ActivateMenuPanel();
     }
 
     private void SetUIactive()
     {
         sm.UIisInteractable = !sm.UIisInteractable;
         sm.UIisInteracted = !sm.UIisInteracted;
-        Cursor.visible = !Cursor.visible;
 
+        Cursor.visible = !Cursor.visible;
+        
         if (Input.GetMouseButton(0)) sm.isInitiallyClicked = false;
     }
 }

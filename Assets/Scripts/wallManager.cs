@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class wallManager : MonoBehaviour
 {
-
     private AudioSource audiosource;
 
     void Start()

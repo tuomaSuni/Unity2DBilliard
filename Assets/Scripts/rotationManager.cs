@@ -43,14 +43,4 @@ public class rotationManager : MonoBehaviour
     {
         rotator.anchoredPosition = Vector2.zero;
     }
-
-    private void OnEnable()
-    {
-        Cursor.visible = true;
-    }
-
-    private void OnDisable()
-    {
-        Cursor.visible = false;
-    }
 }
