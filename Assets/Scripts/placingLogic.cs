@@ -5,7 +5,7 @@ using UnityEngine;
 public class placingLogic : MonoBehaviour
 {
     [HideInInspector] public bool isPlaceable = true;
-    private HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
+    [HideInInspector] public HashSet<Collider2D> collidersInContact = new HashSet<Collider2D>();
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -14,12 +14,6 @@ public class placingLogic : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
-    {
-        collidersInContact.Add(collider);
-        UpdateRockState();
-    }
-
-    private void OnTriggerStay2D(Collider2D collider)
     {
         collidersInContact.Add(collider);
         UpdateRockState();
@@ -42,7 +36,7 @@ public class placingLogic : MonoBehaviour
     {
         if (collidersInContact.Count > 0)
         {
-            SetRockTransparency(0.7f);
+            SetRockTransparency(0.4f);
             isPlaceable = false;
         }
         else

@@ -11,11 +11,11 @@ public class stateManager : MonoBehaviour
     [Header("Booleans")]
     [HideInInspector] public bool HasPlayerWon;
     [HideInInspector] public bool HasGameEnded = false;
-    [HideInInspector] public bool isSettingRotation = false;
     [HideInInspector] public bool UIisInteractable = false;
-    [HideInInspector] public bool isChargeable = false;
+    [HideInInspector] public bool UIisInteracted = false;
     [HideInInspector] public bool isCharged = false;
-
+    [HideInInspector] public bool isInitiallyClicked = false;
+    
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
@@ -54,7 +54,6 @@ public class stateManager : MonoBehaviour
     {
         EndGame(true);
     }
-
 
     private void EndGame(bool playerWon)
     {

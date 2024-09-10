@@ -24,7 +24,7 @@ public class holeLogic : MonoBehaviour
         col.gameObject.transform.position = transform.position;
         
         Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
+        rb.simulated = false;
         sm.listOfBalls.Remove(rb);
 
         col.gameObject.transform.localScale *= 0.75f;

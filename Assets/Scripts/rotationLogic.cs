@@ -16,6 +16,6 @@ public class rotationLogic : MonoBehaviour
 
     void Update ()
     {
-        if (sm.isSettingRotation) rotationVector = rm.rotator.anchoredPosition / 95f;
+        rotationVector = rm.rotator.anchoredPosition / 95f;
     }
 }

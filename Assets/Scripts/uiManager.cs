@@ -14,8 +14,9 @@ public class uiManager : MonoBehaviour
 
     public void GameEnd()
     {
+        SetUIactive();
+        
         GameEndPanel.SetActive(!GameEndPanel.activeSelf);
-        sm.isSettingRotation = !sm.isSettingRotation;
 
         if (sm.HasGameEnded)
         {
@@ -26,15 +27,23 @@ public class uiManager : MonoBehaviour
 
     public void ActivateRotationPanel()
     {
+        SetUIactive();
+
         rotationPanel.SetActive(!rotationPanel.activeSelf);
-        sm.isSettingRotation = !sm.isSettingRotation;
-        sm.isChargeable = false;
-        sm.UIisInteractable = !sm.UIisInteractable;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && sm.UIisInteractable) ActivateRotationPanel();
         if (Input.GetKeyDown(KeyCode.Escape) && sm.UIisInteractable) GameEnd();
+    }
+
+    private void SetUIactive()
+    {
+        sm.UIisInteractable = !sm.UIisInteractable;
+        sm.UIisInteracted = !sm.UIisInteracted;
+        Cursor.visible = !Cursor.visible;
+
+        if (Input.GetMouseButton(0)) sm.isInitiallyClicked = false;
     }
 }

@@ -27,10 +27,7 @@ public class lineLogic : MonoBehaviour
 
     private void Update()
     {
-        if (!sm.isCharged)
-        {
-            HandleLineRendering();
-        }
+        if (!sm.isCharged) HandleLineRendering();
     }
 
     private void InitializeEndPoint()

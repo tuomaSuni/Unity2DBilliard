@@ -12,8 +12,8 @@ public class rotationManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() && sm.AllBallsHasStopped()) SetRotationAmount();
-        if (Input.GetKeyDown(KeyCode.Escape)) uim.ActivateRotationPanel();
+        if (Input.GetMouseButton(0) && sm.AllBallsHasStopped() && CloseEnough()) SetRotationAmount();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab)) uim.ActivateRotationPanel();
     }
 
     private void SetRotationAmount()
@@ -29,6 +29,14 @@ public class rotationManager : MonoBehaviour
         }
 
         rotator.position = mousePosition;
+    }
+    
+    private bool CloseEnough()
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        if (Vector2.Distance(Vector2.zero, mousePos) < 5f) return true;
+        else return false;
     }
 
     public void ResetRotationAmount()

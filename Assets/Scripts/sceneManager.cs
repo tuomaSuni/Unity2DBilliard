@@ -8,7 +8,6 @@ public class sceneManager : MonoBehaviour
 {
     [SerializeField] private Image fadeImage; // Assign your UI Image here
     private float fadeDuration = 0.5f;
-    [SerializeField] private GameObject settings_tab;
 
     private void Start()
     {
@@ -25,10 +24,6 @@ public class sceneManager : MonoBehaviour
     public void LoadScene(string scene)
     {
         StartCoroutine(FadeOut(scene));
-    }
-    public void OpenSettingsTab()
-    {
-        settings_tab.SetActive(!settings_tab.activeSelf);
     }
 
     private IEnumerator FadeOut(string scene) {
