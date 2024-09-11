@@ -1990,6 +1990,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6134752993795830672, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
   m_PrefabInstance: {fileID: 1442183483}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1484851153 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5217997929461724378, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+  m_PrefabInstance: {fileID: 2061421585}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1599371772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,10 +2529,26 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 2387367015178273305, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3227561290050431278, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: cuePoint
+      value: 
+      objectReference: {fileID: 1484851153}
+    - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: rockPoint
+      value: 
+      objectReference: {fileID: 2061421586}
     - target: {fileID: 7188506511621459976, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -2572,6 +2593,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+      propertyPath: cue
+      value: 
+      objectReference: {fileID: 1484851153}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

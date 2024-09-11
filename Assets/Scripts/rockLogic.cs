@@ -10,23 +10,23 @@ public class rockLogic : MonoBehaviour
     private rotationLogic rl;
     private placingLogic  pl;
 
-    [Header("GameObjects")]
-    [SerializeField] private GameObject cue;
+    [Header("Utilities")]
+    [SerializeField] private Transform cue;
     [SerializeField] private GameObject line;
 
     // Settings //
-    private float pushForce = 0f;
-
+    
     [Range(50f, 70f)]
     [SerializeField] private float maxPushForce  = 50.0f;
     [SerializeField] private float rotationForce = 10.0f;
+
+    private float pushForce = 0f;
 
     // Booleans //
     private bool isOnHand = true;
     private bool isAiming = false;
 
     // References //
-    private SpriteRenderer cueSpriteRenderer;
     private AudioSource audioSource;
     private Rigidbody2D rb2D;
     
@@ -48,8 +48,6 @@ public class rockLogic : MonoBehaviour
         ll = line.GetComponent<lineLogic>();
         rl = GetComponent<rotationLogic>();
         pl = GetComponent<placingLogic>();
-
-        cueSpriteRenderer = cue.GetComponent<SpriteRenderer>();
         
         audioSource = GetComponent<AudioSource>();
     }
@@ -92,7 +90,7 @@ public class rockLogic : MonoBehaviour
         if (Input.GetMouseButton(0) && sm.isInitiallyClicked && CanChargeShot())
         {
             pushForce += Time.deltaTime * 30;
-            cue.transform.localPosition += Vector3.left * Time.deltaTime * 2;
+            cue.localPosition += Vector3.left * Time.deltaTime * 2;
 
             sm.isCharged = true;
         }
@@ -146,8 +144,8 @@ public class rockLogic : MonoBehaviour
         PlayShotSound();
         ApplyShotForce();
 
-        cue.transform.localPosition = new Vector3(-18.75f, 0f, 0f);
-        SetCueAndLineVisibility(false);
+        cue.localPosition = new Vector3(-18.75f, 0f, 0f);
+        SetLineVisibility(false);
         
         Cursor.visible = true;
         sm.UIisInteractable = false;
@@ -176,7 +174,7 @@ public class rockLogic : MonoBehaviour
     {
         sm.isCharged = true;
         pushForce = maxPushForce;
-        cue.transform.localPosition += Vector3.left * 4;
+        cue.localPosition += Vector3.left * 4;
     }
 
     private bool CanChargeShot()
@@ -195,7 +193,7 @@ public class rockLogic : MonoBehaviour
         {
             isAiming = true;
             sm.UIisInteractable = true;
-            SetCueAndLineVisibility(true);
+            SetLineVisibility(true);
             hasCollided = false;
             rb2D.drag = 1;
             rl.ResetRotation();
@@ -232,15 +230,14 @@ public class rockLogic : MonoBehaviour
         }
     }
 
-    private void SetCueAndLineVisibility(bool visibility)
+    private void SetLineVisibility(bool visibility)
     {
         line.SetActive(visibility);
-        cueSpriteRenderer.enabled = visibility;
     }
 
     public void ResetState()
     {
-        SetCueAndLineVisibility(false);
+        SetLineVisibility(false);
         Cursor.visible = true;
         sm.UIisInteractable = false;
         this.enabled = false;
