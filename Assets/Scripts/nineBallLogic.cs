@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class nineBallLogic : ballLogic
 {
+    [SerializeField] private GameObject rock;
+
     protected override void OnDisable()
     {
         base.OnDisable();
-        sm.CheckNineballGameState();
+        sm.CheckNineballGameState(rock.GetComponent<nineBallRockLogic>().isJustified);
     }
 }

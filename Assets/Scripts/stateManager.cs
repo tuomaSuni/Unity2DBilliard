@@ -50,9 +50,9 @@ public class stateManager : MonoBehaviour
         else EndGame(false);
     }
 
-    public void CheckNineballGameState()
+    public void CheckNineballGameState(bool isJustified)
     {
-        EndGame(true);
+        EndGame(isJustified);
     }
 
     private void EndGame(bool playerWon)

@@ -204,10 +204,7 @@ public class rockLogic : MonoBehaviour
 
         if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
         {
-            SetCueAndLineVisibility(false);
-            Cursor.visible = true;
-            sm.UIisInteractable = false;
-            this.enabled = false;
+            ResetState();
         }
     }
 
@@ -239,5 +236,13 @@ public class rockLogic : MonoBehaviour
     {
         line.SetActive(visibility);
         cueSpriteRenderer.enabled = visibility;
+    }
+
+    public void ResetState()
+    {
+        SetCueAndLineVisibility(false);
+        Cursor.visible = true;
+        sm.UIisInteractable = false;
+        this.enabled = false;
     }
 }

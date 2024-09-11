@@ -1520,6 +1520,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 7732431570572201466, guid: 23557f9caed1bc64684a1c137aa21edb, type: 3}
+      propertyPath: rock
+      value: 
+      objectReference: {fileID: 2061421587}
     - target: {fileID: 8809285566790194740, guid: 23557f9caed1bc64684a1c137aa21edb, type: 3}
       propertyPath: sm
       value: 

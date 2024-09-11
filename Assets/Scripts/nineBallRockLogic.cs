@@ -8,8 +8,9 @@ public class nineBallRockLogic : MonoBehaviour
     private stateManager sm;
     [HideInInspector] public Transform nineset;
     private bool hasCollided = false;
+    [HideInInspector] public bool isJustified = true;
 
-    private void Awake()
+    private void Start()
     {
         sm = GetComponent<rockLogic>().sm;
     }
@@ -19,9 +20,10 @@ public class nineBallRockLogic : MonoBehaviour
         if (hasCollided == false && collision.gameObject.CompareTag("Ball"))
         {
             hasCollided = true;
-            
+
             if (collision.transform != nineset.GetChild(0))
             {
+                isJustified = false;
                 StartCoroutine(SetRockToHand());
             }
         }
@@ -34,6 +36,13 @@ public class nineBallRockLogic : MonoBehaviour
             yield return null;
         }
 
+        GetComponent<rockLogic>().ResetState();
         gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        hasCollided = false;
+        isJustified = true;
     }
 }
