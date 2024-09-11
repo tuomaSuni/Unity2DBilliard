@@ -32,7 +32,7 @@ public class holeLogic : MonoBehaviour
 
     private IEnumerator End(Collision2D col)
     {
-        GameObject currentDestroyable = col.gameObject;
+        GameObject baggedBall = col.gameObject;
 
         yield return new WaitForSeconds(2.0f);
 
@@ -41,6 +41,6 @@ public class holeLogic : MonoBehaviour
             yield return null;
         }
         
-        currentDestroyable.SetActive(false);
+        baggedBall.SetActive(false);
     }
 }

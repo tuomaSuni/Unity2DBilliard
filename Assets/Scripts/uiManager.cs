@@ -12,6 +12,11 @@ public class uiManager : MonoBehaviour
     [SerializeField] GameObject rotationPanel;
     [SerializeField] GameObject menuPanel;
 
+    private void Awake()
+    {
+        Cursor.visible = true;
+    }
+    
     public void ActivateMenuPanel()
     {
         SetUIactive();
