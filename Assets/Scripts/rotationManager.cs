@@ -12,11 +12,11 @@ public class rotationManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && sm.AllBallsHasStopped() && CloseEnough()) SetRotationAmount();
+        if (Input.GetMouseButton(0) && sm.AllBallsHasStopped() && CloseEnough()) SetRotatorLocation();
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab)) uim.ActivateRotationPanel();
     }
 
-    private void SetRotationAmount()
+    private void SetRotatorLocation()
     {
         Vector3 mousePosition = Input.mousePosition;
         rotator.position = mousePosition;
@@ -39,7 +39,7 @@ public class rotationManager : MonoBehaviour
         else return false;
     }
 
-    public void ResetRotationAmount()
+    public void ResetRotatorLocation()
     {
         rotator.anchoredPosition = Vector2.zero;
     }

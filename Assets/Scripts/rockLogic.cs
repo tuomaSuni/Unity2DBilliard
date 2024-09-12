@@ -9,6 +9,7 @@ public class rockLogic : MonoBehaviour
     private lineLogic     ll;
     private rotationLogic rl;
     private placingLogic  pl;
+    private nineBallRockLogic nbrl;
 
     [Header("Utilities")]
     [SerializeField] private Transform cue;
@@ -48,14 +49,20 @@ public class rockLogic : MonoBehaviour
         ll = line.GetComponent<lineLogic>();
         rl = GetComponent<rotationLogic>();
         pl = GetComponent<placingLogic>();
-        
+
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        nbrl = GetComponent<nineBallRockLogic>();
     }
 
     private void OnEnable()
     {
         isOnHand = true;
         isAiming = false;
+
         hasCollided = false;
         sm.isInitiallyClicked = false;
 
@@ -69,9 +76,12 @@ public class rockLogic : MonoBehaviour
     private void Update()
     {
         rockVelocity = rb2D.velocity.magnitude;
-        
-        HandleAiming();
-        HandleShooting();
+
+        if (IsMouseOverGameWindow())
+        {
+            HandleAiming();
+            HandleShooting();
+        }
         HandleMovementState();
     }
 
@@ -87,7 +97,7 @@ public class rockLogic : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButton(0) && sm.isInitiallyClicked && CanChargeShot())
+        if (Input.GetMouseButton(0) && CanChargeShot() && sm.isInitiallyClicked)
         {
             pushForce += Time.deltaTime * 30;
             cue.localPosition += Vector3.left * Time.deltaTime * 2;
@@ -131,6 +141,7 @@ public class rockLogic : MonoBehaviour
     private void StartAiming()
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
+
         isOnHand = false;
         Cursor.visible = false;
         sm.UIisInteractable = true;
@@ -149,9 +160,9 @@ public class rockLogic : MonoBehaviour
         
         Cursor.visible = true;
         sm.UIisInteractable = false;
-        isAiming = false;
 
         sm.isCharged = false;
+        isAiming = false;
     }
 
     private void PlayShotSound()
@@ -187,21 +198,43 @@ public class rockLogic : MonoBehaviour
         return sm.AllBallsHasStopped() && !sm.UIisInteracted;
     }
 
+    public bool IsInAimingState()
+    {
+        return (!isOnHand && !isAiming && sm.AllBallsHasStopped());
+    }
+
+    private void SetIntoAimingState()
+    {
+        rl.ResetRotationVector();
+        isAiming = true;
+        sm.UIisInteractable = true;
+        SetLineVisibility(true);
+        hasCollided = false;
+        rb2D.drag = 1;
+        Cursor.visible = false;
+
+        if (nbrl != null)
+        {
+            nbrl.hasCollided = false;
+            nbrl.isJustified = true;
+        }
+    }
+
+    private bool IsBagged()
+    {
+        return (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f));
+    }
+
     private void HandleMovementState()
     {
-        if (!isAiming && !isOnHand && sm.AllBallsHasStopped())
+        if (IsInAimingState())
         {
-            isAiming = true;
-            sm.UIisInteractable = true;
-            SetLineVisibility(true);
-            hasCollided = false;
-            rb2D.drag = 1;
-            rl.ResetRotation();
-            Cursor.visible = false;
+            SetIntoAimingState();
         }
 
-        if (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f))
+        if (IsBagged())
         {
+            rb2D.simulated = false;
             ResetState();
         }
     }
@@ -241,5 +274,11 @@ public class rockLogic : MonoBehaviour
         Cursor.visible = true;
         sm.UIisInteractable = false;
         this.enabled = false;
+    }
+
+    bool IsMouseOverGameWindow()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        return !( 0 > mousePosition.x || 0 > mousePosition.y || Screen.width < mousePosition.x || Screen.height < mousePosition.y );
     }
 }

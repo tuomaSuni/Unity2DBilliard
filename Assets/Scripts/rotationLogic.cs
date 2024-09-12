@@ -8,9 +8,9 @@ public class rotationLogic : MonoBehaviour
     [SerializeField] private rotationManager rm;
     [HideInInspector] public Vector2 rotationVector;
     
-    public void ResetRotation()
+    public void ResetRotationVector()
     {
-        rm.ResetRotationAmount();
+        rm.ResetRotatorLocation();
         rotationVector = Vector2.zero;
     }
 

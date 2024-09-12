@@ -19,7 +19,6 @@ public class stateManager : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
-    [SerializeField] private Transform set;
 
     public bool AllBallsHasStopped()
     {
@@ -50,9 +49,9 @@ public class stateManager : MonoBehaviour
         else EndGame(false);
     }
 
-    public void CheckNineballGameState(bool isJustified)
+    public void CheckNineballGameState(bool wasLegalShot)
     {
-        EndGame(isJustified);
+        EndGame(wasLegalShot);
     }
 
     private void EndGame(bool playerWon)

@@ -10,10 +10,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         sets.GetChild(PlayerPrefs.GetInt("Type")).gameObject.SetActive(true);
-    }
 
-    void Start()
-    {
         if (PlayerPrefs.GetInt("Type") == 2) 
         {
             rock.AddComponent<nineBallRockLogic>();

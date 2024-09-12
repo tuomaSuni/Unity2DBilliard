@@ -967,8 +967,7 @@ MonoBehaviour:
   isCharged: 0
   isInitiallyClicked: 0
   limit: {fileID: 1052703438}
-  uim: {fileID: 0}
-  set: {fileID: 0}
+  uim: {fileID: 833283729}
 --- !u!4 &510562932
 Transform:
   m_ObjectHideFlags: 0

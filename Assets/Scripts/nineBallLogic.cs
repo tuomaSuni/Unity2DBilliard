@@ -5,10 +5,20 @@ using UnityEngine;
 public class nineBallLogic : ballLogic
 {
     [SerializeField] private GameObject rock;
+    private bool isQuitting = false;
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
 
     protected override void OnDisable()
     {
+        if (isQuitting) return;
+
         base.OnDisable();
-        sm.CheckNineballGameState(rock.GetComponent<nineBallRockLogic>().isJustified);
+
+        nineBallRockLogic rockLogic = rock.GetComponent<nineBallRockLogic>();
+        sm.CheckNineballGameState(rockLogic.savedIsJustified);
     }
 }
