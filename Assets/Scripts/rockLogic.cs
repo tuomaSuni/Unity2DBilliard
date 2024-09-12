@@ -77,17 +77,14 @@ public class rockLogic : MonoBehaviour
     {
         rockVelocity = rb2D.velocity.magnitude;
 
-        if (IsMouseOverGameWindow())
-        {
-            HandleAiming();
-            HandleShooting();
-        }
+        HandleAiming();
+        HandleShooting();
         HandleMovementState();
     }
 
     private void HandleAiming()
     {
-        if (isOnHand)
+        if (isOnHand && IsMouseOverGameWindow())
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 1f;
@@ -266,6 +263,7 @@ public class rockLogic : MonoBehaviour
     private void SetLineVisibility(bool visibility)
     {
         line.SetActive(visibility);
+        ll.HandleLineRendering();
     }
 
     public void ResetState()

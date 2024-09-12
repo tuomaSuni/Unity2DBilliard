@@ -6,8 +6,14 @@ using UnityEngine.UI;
 
 public class sceneManager : MonoBehaviour
 {
-    [SerializeField] private Image fadeImage; // Assign your UI Image here
+    [SerializeField] private Image fadeImage;
     private float fadeDuration = 0.5f;
+
+    private void Awake()
+    {
+        Cursor.visible = true;
+        fadeImage.gameObject.SetActive(true);
+    }
 
     private void Start()
     {

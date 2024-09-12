@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sm: {fileID: 0}
-  cue: {fileID: 2387367015178273305}
+  cue: {fileID: 5217997929461724378}
   line: {fileID: 2693509587919850284}
   maxPushForce: 60
   rotationForce: 10
@@ -426,7 +426,7 @@ MonoBehaviour:
   sm: {fileID: 0}
   dotPrefab: {fileID: 8779660329476903500, guid: bdd181c4bdf1e344a97a84065d8b9066, type: 3}
   endPointPrefab: {fileID: 4801111443225440814, guid: 2e3aca32b891a5840bfdc78d6536cc65, type: 3}
-  startPoint: {fileID: 7188506511621459976}
-  cueTransform: {fileID: 5217997929461724378}
+  rockPoint: {fileID: 0}
+  cuePoint: {fileID: 0}
   dotSpacing: 0.5
   mousePosition: {x: 0, y: 0}

@@ -22,8 +22,6 @@ public class lineLogic : MonoBehaviour
     {
         InitializeEndPoint();
         InitializeDotPool();
-
-        HandleLineRendering();
     }
 
     private void OnEnable()
@@ -64,7 +62,7 @@ public class lineLogic : MonoBehaviour
         dotPool.Enqueue(newDot);
     }
 
-    private void HandleLineRendering()
+    public void HandleLineRendering()
     {
         mousePosition = GetMouseWorldPosition();
         int dotCount = CalculateDotCount(mousePosition);

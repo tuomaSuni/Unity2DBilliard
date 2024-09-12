@@ -11,11 +11,6 @@ public class uiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI info;
     [SerializeField] GameObject rotationPanel;
     [SerializeField] GameObject menuPanel;
-
-    private void Awake()
-    {
-        Cursor.visible = true;
-    }
     
     public void ActivateMenuPanel()
     {
