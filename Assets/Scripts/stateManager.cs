@@ -72,7 +72,7 @@ public class stateManager : MonoBehaviour
 
         if (Rock != null)
         {
-            Rock.GetComponent<rockLogic>().enabled = false;
+            Rock.GetComponent<rockLogic>().ResetState();
         }
 
         Destroy(this);

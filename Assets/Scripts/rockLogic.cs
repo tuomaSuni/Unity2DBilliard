@@ -262,8 +262,8 @@ public class rockLogic : MonoBehaviour
 
     private void SetLineVisibility(bool visibility)
     {
-        line.SetActive(visibility);
         ll.HandleLineRendering();
+        line.SetActive(visibility);
     }
 
     public void ResetState()

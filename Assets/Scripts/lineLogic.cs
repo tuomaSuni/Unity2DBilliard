@@ -22,6 +22,8 @@ public class lineLogic : MonoBehaviour
     {
         InitializeEndPoint();
         InitializeDotPool();
+
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -36,7 +38,7 @@ public class lineLogic : MonoBehaviour
 
     private void Update()
     {
-        if (!sm.isCharged) HandleLineRendering();
+        if (!sm.isCharged && !sm.UIisInteracted) HandleLineRendering();
     }
 
     private void InitializeEndPoint()
