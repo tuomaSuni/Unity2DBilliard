@@ -23,6 +23,7 @@ public class lineLogic : MonoBehaviour
         InitializeEndPoint();
         InitializeDotPool();
 
+        cuePoint.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 

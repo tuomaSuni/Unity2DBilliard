@@ -958,7 +958,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65f90dc6be0c684a849fa566331c860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Computer: {fileID: 0}
+  cl: {fileID: 0}
   Rock: {fileID: 2061421587}
+  rl: {fileID: 2061421591}
   listOfBalls: []
   HasPlayerWon: 0
   HasGameEnded: 0
@@ -966,6 +969,7 @@ MonoBehaviour:
   UIisInteracted: 0
   isCharged: 0
   isInitiallyClicked: 0
+  isPlayerTurn: 1
   limit: {fileID: 1052703438}
   uim: {fileID: 833283729}
 --- !u!4 &510562932
@@ -2615,6 +2619,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
   m_PrefabInstance: {fileID: 2061421585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2061421591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
+  m_PrefabInstance: {fileID: 2061421585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061421587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c507aa80358368142bc6c0f8f9c0aed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &341247010123825221
 GameObject:
   m_ObjectHideFlags: 0

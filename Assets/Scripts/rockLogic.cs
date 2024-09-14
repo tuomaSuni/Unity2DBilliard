@@ -21,11 +21,10 @@ public class rockLogic : MonoBehaviour
     [SerializeField] private float maxPushForce  = 50.0f;
     [SerializeField] private float rotationForce = 10.0f;
 
-    private float pushForce = 0f;
+    private float pushForce = 0.0f;
 
     // Booleans //
     private bool isOnHand = true;
-    private bool isAiming = false;
 
     // References //
     private AudioSource audioSource;
@@ -61,7 +60,6 @@ public class rockLogic : MonoBehaviour
     private void OnEnable()
     {
         isOnHand = true;
-        isAiming = false;
 
         hasCollided = false;
         sm.isInitiallyClicked = false;
@@ -70,7 +68,6 @@ public class rockLogic : MonoBehaviour
         GetComponent<CircleCollider2D>().isTrigger = true;
 
         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        rb2D.simulated = true;
     }
 
     private void Update()
@@ -108,7 +105,7 @@ public class rockLogic : MonoBehaviour
             {
                 if (Input.GetMouseButtonUp(0) && sm.isInitiallyClicked)
                 {
-                    Shoot();
+                    Shoot(ll.mousePosition, pushForce);
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -118,7 +115,7 @@ public class rockLogic : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1))
                 {
-                    Shoot();
+                    Shoot(ll.mousePosition, pushForce);
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -131,6 +128,7 @@ public class rockLogic : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && pl.isPlaceable)
             {
                 StartAiming();
+                SetIntoAimingState();
             }
         }
     }
@@ -144,13 +142,13 @@ public class rockLogic : MonoBehaviour
         sm.UIisInteractable = true;
     }
 
-    private void Shoot()
+    public void Shoot(Vector2 direction, float force)
     {
         if (rl.rotationVector.y < 0) rb2D.drag -= rl.rotationVector.y * 2.0f;
         if (rl.rotationVector.y > 0) rb2D.drag -= rl.rotationVector.y * 0.7f;
 
         PlayShotSound();
-        ApplyShotForce();
+        ApplyShotForce(direction, force);
 
         cue.localPosition = new Vector3(-18.75f, 0f, 0f);
         SetLineVisibility(false);
@@ -159,7 +157,17 @@ public class rockLogic : MonoBehaviour
         sm.UIisInteractable = false;
 
         sm.isCharged = false;
-        isAiming = false;
+
+        sm.InitializeStateCheck();
+    }
+
+    private void ApplyShotForce(Vector2 direction, float force)
+    {
+        parallelDirection = (direction - rb2D.position).normalized;
+        perpendicularDirection = new Vector2(parallelDirection.y, -parallelDirection.x);
+
+        rb2D.velocity = parallelDirection * force;
+        pushForce = 0;
     }
 
     private void PlayShotSound()
@@ -167,15 +175,6 @@ public class rockLogic : MonoBehaviour
         audioSource.volume = pushForce / maxPushForce;
         audioSource.pitch = Random.Range(0.95f, 1.05f);
         audioSource.Play();
-    }
-
-    private void ApplyShotForce()
-    {
-        parallelDirection = (ll.mousePosition - rb2D.position).normalized;
-        perpendicularDirection = new Vector2(parallelDirection.y, -parallelDirection.x);
-
-        rb2D.velocity = parallelDirection * pushForce;
-        pushForce = 0;
     }
 
     private void ChargeShot()
@@ -192,18 +191,12 @@ public class rockLogic : MonoBehaviour
 
     private bool CanShoot()
     {
-        return sm.AllBallsHasStopped() && !sm.UIisInteracted;
+        return sm.AllBallsHasStopped() && !sm.UIisInteracted && sm.isPlayerTurn;
     }
 
-    public bool IsInAimingState()
-    {
-        return (!isOnHand && !isAiming && sm.AllBallsHasStopped());
-    }
-
-    private void SetIntoAimingState()
+    public void SetIntoAimingState()
     {
         rl.ResetRotationVector();
-        isAiming = true;
         sm.UIisInteractable = true;
         SetLineVisibility(true);
         hasCollided = false;
@@ -224,14 +217,8 @@ public class rockLogic : MonoBehaviour
 
     private void HandleMovementState()
     {
-        if (IsInAimingState())
-        {
-            SetIntoAimingState();
-        }
-
         if (IsBagged())
         {
-            rb2D.simulated = false;
             ResetState();
         }
     }
@@ -269,6 +256,7 @@ public class rockLogic : MonoBehaviour
     public void ResetState()
     {
         SetLineVisibility(false);
+        isOnHand = true;
         Cursor.visible = true;
         sm.UIisInteractable = false;
         this.enabled = false;

@@ -4,21 +4,40 @@ using UnityEngine;
 
 public class stateManager : MonoBehaviour
 {
-    [Header("Balls")]
+    private bool isSoloMode = true;
+    
+    [Header("Computer")]
+    [SerializeField] private GameObject Computer;
+    [SerializeField] private computerLogic cl;
+
+    [Header("Rock")]
     [SerializeField] private GameObject Rock;
+    [SerializeField] private rockLogic rl;
+
+    [Header("Balls")]
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
 
-    [Header("Booleans")]
+    // Booleans
     [HideInInspector] public bool HasPlayerWon;
     [HideInInspector] public bool HasGameEnded = false;
     [HideInInspector] public bool UIisInteractable = false;
     [HideInInspector] public bool UIisInteracted = false;
     [HideInInspector] public bool isCharged = false;
     [HideInInspector] public bool isInitiallyClicked = false;
-    
+    [HideInInspector] public bool isPlayerTurn = true;
+
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
+
+    private void Awake()
+    {
+        if (PlayerPrefs.GetInt("Mode") == 1)
+        {
+            cl = Instantiate(Computer).GetComponent<computerLogic>();
+            isSoloMode = false;
+        }
+    }
 
     public bool AllBallsHasStopped()
     {
@@ -36,11 +55,11 @@ public class stateManager : MonoBehaviour
     {
         if (!Rock.activeSelf)
         {
-            Rock.SetActive(true);
-            Rock.GetComponent<rockLogic>().enabled = true;
+            OnRockBagged();
         }
 
         if (Rock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+
     }
 
     public void CheckEightballGameState()
@@ -72,9 +91,56 @@ public class stateManager : MonoBehaviour
 
         if (Rock != null)
         {
-            Rock.GetComponent<rockLogic>().ResetState();
+            rl.ResetState();
         }
 
         Destroy(this);
+    }
+
+    public void InitializeStateCheck()
+    {
+        if (isSoloMode)     StartCoroutine(SoloMode());
+        else                StartCoroutine(ComputerMode());
+    }
+
+    private void OnRockBagged()
+    {
+        Rock.SetActive(true);
+        rl.enabled = true;
+        isPlayerTurn = true;
+    }
+
+    private IEnumerator SoloMode()
+    {
+        while (AllBallsHasStopped() == false)
+        {
+            yield return null;
+        }
+        
+        rl.SetIntoAimingState();
+    }
+
+    private IEnumerator ComputerMode()
+    {
+        int amountOfBallsOnStart = listOfBalls.Count;
+        
+        while (AllBallsHasStopped() == false)
+        {
+            yield return null;
+        }
+
+        if (listOfBalls.Count == amountOfBallsOnStart)
+        {
+            isPlayerTurn = !isPlayerTurn;
+        }
+        
+        if (isPlayerTurn)
+        {
+            rl.SetIntoAimingState();
+        }
+        else
+        {
+            rl.Shoot(cl.SetTarget(), cl.SetForce());
+        }
     }
 }

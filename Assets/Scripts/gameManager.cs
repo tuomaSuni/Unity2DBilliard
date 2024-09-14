@@ -9,7 +9,8 @@ public class gameManager : MonoBehaviour
 
     void Awake()
     {
-        sets.GetChild(PlayerPrefs.GetInt("Type")).gameObject.SetActive(true);
+        Transform playedSet = sets.GetChild(PlayerPrefs.GetInt("Type"));
+        playedSet.gameObject.SetActive(true);
 
         if (PlayerPrefs.GetInt("Type") == 2) 
         {
