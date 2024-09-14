@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class stateManager : MonoBehaviour
 {
-    private bool isSoloMode = true;
+    public bool isSoloMode = true;
     
     [Header("Computer")]
     [SerializeField] private GameObject Computer;
@@ -29,15 +29,6 @@ public class stateManager : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
     [SerializeField] private uiManager uim;
-
-    private void Awake()
-    {
-        if (PlayerPrefs.GetInt("Mode") == 1)
-        {
-            cl = Instantiate(Computer).GetComponent<computerLogic>();
-            isSoloMode = false;
-        }
-    }
 
     public bool AllBallsHasStopped()
     {
@@ -64,13 +55,13 @@ public class stateManager : MonoBehaviour
 
     public void CheckEightballGameState()
     {
-        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>()) EndGame(true);    
+        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>() && isPlayerTurn) EndGame(true);    
         else EndGame(false);
     }
 
     public void CheckNineballGameState(bool wasLegalShot)
     {
-        EndGame(wasLegalShot);
+        EndGame(wasLegalShot && isPlayerTurn);
     }
 
     private void EndGame(bool playerWon)

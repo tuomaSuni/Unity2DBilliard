@@ -122,6 +122,88 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &40060788
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1839944874}
+    m_Modifications:
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504560455748267923, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_Name
+      value: Computer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504560455748267923, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+--- !u!114 &40060789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5448416576944426453, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+  m_PrefabInstance: {fileID: 40060788}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40060790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dcd1639c8f62a43befdf1ebe7b79ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &40060790 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8504560455748267923, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+  m_PrefabInstance: {fileID: 40060788}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &40060791 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+  m_PrefabInstance: {fileID: 40060788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &81863070
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,8 +1040,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65f90dc6be0c684a849fa566331c860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Computer: {fileID: 0}
-  cl: {fileID: 0}
+  isSoloMode: 1
+  Computer: {fileID: 40060790}
+  cl: {fileID: 40060789}
   Rock: {fileID: 2061421587}
   rl: {fileID: 2061421591}
   listOfBalls: []
@@ -1710,8 +1793,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea71599631eca64e8e1f8fa03120a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sm: {fileID: 510562931}
   sets: {fileID: 1672220989}
   rock: {fileID: 2061421587}
+  computer: {fileID: 40060790}
 --- !u!1 &1221599844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,6 +2365,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 40060791}
   - {fileID: 267948310}
   - {fileID: 3009722689588141335}
   - {fileID: 2061421586}

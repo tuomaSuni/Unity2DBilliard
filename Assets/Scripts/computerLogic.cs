@@ -8,7 +8,19 @@ public class computerLogic : MonoBehaviour
 
     public Vector2 SetTarget()
     {
-        return set.GetChild(0).transform.position - transform.position.normalized;
+        Transform currentTargetBall = null;
+
+        for (int i = 0; i < set.childCount; i++)
+        {
+            if (set.GetChild(i).gameObject.activeSelf == true)
+            {
+                currentTargetBall = set.GetChild(i);
+
+                break;
+            }
+        }
+
+        return currentTargetBall.transform.position - transform.position.normalized;
     }
 
     public float SetForce()
