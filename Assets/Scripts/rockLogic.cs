@@ -76,7 +76,8 @@ public class rockLogic : MonoBehaviour
 
         HandleAiming();
         HandleShooting();
-        HandleMovementState();
+
+        if (transform.localScale.x < 0.4f) ResetState();
     }
 
     private void HandleAiming()
@@ -91,7 +92,7 @@ public class rockLogic : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButton(0) && CanChargeShot() && sm.isInitiallyClicked)
+        if (Input.GetMouseButton(0) && sm.isInitiallyClicked && CanChargeShot() && IsMouseOverGameWindow())
         {
             pushForce += Time.deltaTime * 30;
             cue.localPosition += Vector3.left * Time.deltaTime * 2;
@@ -196,31 +197,26 @@ public class rockLogic : MonoBehaviour
 
     public void SetIntoAimingState()
     {
-        rl.ResetRotationVector();
-        sm.UIisInteractable = true;
-        SetLineVisibility(true);
-        hasCollided = false;
-        rb2D.drag = 1;
-        Cursor.visible = false;
-
-        if (nbrl != null)
+        if (!isOnHand)
         {
-            nbrl.hasCollided = false;
-            nbrl.isJustified = true;
+            rl.ResetRotationVector();
+            sm.UIisInteractable = true;
+            SetLineVisibility(true);
+            hasCollided = false;
+            rb2D.drag = 1;
+            Cursor.visible = false;
+
+            if (nbrl != null)
+            {
+                nbrl.hasCollided = false;
+                nbrl.isJustified = true;
+            }
         }
     }
 
     private bool IsBagged()
     {
         return (transform.localScale == new Vector3(0.30f, 0.30f, 0.30f));
-    }
-
-    private void HandleMovementState()
-    {
-        if (IsBagged())
-        {
-            ResetState();
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -231,8 +227,6 @@ public class rockLogic : MonoBehaviour
 
             StartCoroutine(ApplyRotationOnImpact());
         }
-
-        hasCollided = true;
     }
 
     private IEnumerator ApplyRotationOnImpact()

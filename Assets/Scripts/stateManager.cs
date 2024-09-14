@@ -55,13 +55,13 @@ public class stateManager : MonoBehaviour
 
     public void CheckEightballGameState()
     {
-        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>() && isPlayerTurn) EndGame(true);    
+        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>()) EndGame(true);    
         else EndGame(false);
     }
 
     public void CheckNineballGameState(bool wasLegalShot)
     {
-        EndGame(wasLegalShot && isPlayerTurn);
+        EndGame((listOfBalls.Count == 1 && wasLegalShot) == isPlayerTurn);
     }
 
     private void EndGame(bool playerWon)
