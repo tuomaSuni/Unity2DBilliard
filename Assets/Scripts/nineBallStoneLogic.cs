@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(rockLogic))]
-public class nineBallRockLogic : MonoBehaviour
+[RequireComponent(typeof(stoneLogic))]
+public class nineBallStoneLogic : MonoBehaviour
 {
-    private rockLogic rl;
+    private stoneLogic rl;
     private stateManager sm;
     [HideInInspector] public Transform nineset;
     [HideInInspector] public bool hasCollided = false;
@@ -14,8 +14,8 @@ public class nineBallRockLogic : MonoBehaviour
 
     private void Start()
     {
-        rl = GetComponent<rockLogic>();
-        sm = GetComponent<rockLogic>().sm;
+        rl = GetComponent<stoneLogic>();
+        sm = GetComponent<stoneLogic>().sm;
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,21 +38,21 @@ public class nineBallRockLogic : MonoBehaviour
             if (collision.transform != currentTargetBall)
             {
                 isJustified = false;
-                StartCoroutine(SetRockToHand());
+                StartCoroutine(SetStoneToHand());
             }
 
             savedIsJustified = isJustified;
         }
     }
 
-    private IEnumerator SetRockToHand()
+    private IEnumerator SetStoneToHand()
     {
         while (sm.AllBallsHasStopped() == false)
         {
             yield return null;
         }
 
-        GetComponent<rockLogic>().ResetState();
+        GetComponent<stoneLogic>().ResetState();
         gameObject.SetActive(false);
     }
 }

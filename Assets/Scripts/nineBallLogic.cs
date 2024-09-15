@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class nineBallLogic : ballLogic
 {
-    [SerializeField] private GameObject rock;
+    [SerializeField] private GameObject stone;
     private bool isQuitting = false;
 
     private void OnApplicationQuit()
@@ -18,7 +18,7 @@ public class nineBallLogic : ballLogic
 
         base.OnDisable();
 
-        nineBallRockLogic rockLogic = rock.GetComponent<nineBallRockLogic>();
-        sm.CheckNineballGameState(rockLogic.savedIsJustified);
+        nineBallStoneLogic stoneLogic = stone.GetComponent<nineBallStoneLogic>();
+        sm.CheckNineballGameState(stoneLogic.savedIsJustified);
     }
 }

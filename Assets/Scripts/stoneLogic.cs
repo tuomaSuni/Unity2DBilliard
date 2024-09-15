@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rockLogic : MonoBehaviour
+public class stoneLogic : MonoBehaviour
 {
     [Header("Dependencies")]
     public stateManager   sm;
     private lineLogic     ll;
     private rotationLogic rl;
     private placingLogic  pl;
-    private nineBallRockLogic nbrl;
+    private nineBallStoneLogic nbrl;
 
     [Header("Utilities")]
     [SerializeField] private Transform cue;
@@ -35,7 +35,7 @@ public class rockLogic : MonoBehaviour
     private Vector2 perpendicularDirection;
 
     // Velocities //
-    private float rockVelocity;
+    private float stoneVelocity;
     private float velocityOnImpact;
 
     // Physics //
@@ -54,7 +54,7 @@ public class rockLogic : MonoBehaviour
 
     private void Start()
     {
-        nbrl = GetComponent<nineBallRockLogic>();
+        nbrl = GetComponent<nineBallStoneLogic>();
     }
 
     private void OnEnable()
@@ -72,7 +72,7 @@ public class rockLogic : MonoBehaviour
 
     private void Update()
     {
-        rockVelocity = rb2D.velocity.magnitude;
+        stoneVelocity = rb2D.velocity.magnitude;
 
         HandleAiming();
         HandleShooting();
@@ -231,7 +231,7 @@ public class rockLogic : MonoBehaviour
 
     private IEnumerator ApplyRotationOnImpact()
     {
-        velocityOnImpact = Mathf.Log(rockVelocity) * rotationForce;
+        velocityOnImpact = Mathf.Log(stoneVelocity) * rotationForce;
 
         for (int i=0; i < velocityOnImpact; i++)
         {

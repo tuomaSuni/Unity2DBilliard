@@ -10,9 +10,9 @@ public class stateManager : MonoBehaviour
     [SerializeField] private GameObject Computer;
     [SerializeField] private computerLogic cl;
 
-    [Header("Rock")]
-    [SerializeField] private GameObject Rock;
-    [SerializeField] private rockLogic rl;
+    [Header("Stone")]
+    [SerializeField] private GameObject Stone;
+    [SerializeField] private stoneLogic rl;
 
     [Header("Balls")]
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
@@ -44,18 +44,18 @@ public class stateManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Rock.activeSelf)
+        if (!Stone.activeSelf)
         {
-            OnRockBagged();
+            OnStoneBagged();
         }
 
-        if (Rock.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
+        if (Stone.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
 
     }
 
     public void CheckEightballGameState()
     {
-        if (listOfBalls.Count == 1 && listOfBalls[0] == Rock.GetComponent<Rigidbody2D>()) EndGame(true);    
+        if (listOfBalls.Count == 1 && listOfBalls[0] == Stone.GetComponent<Rigidbody2D>()) EndGame(true);    
         else EndGame(false);
     }
 
@@ -80,7 +80,7 @@ public class stateManager : MonoBehaviour
             Destroy(uim);
         }
 
-        if (Rock != null)
+        if (Stone != null)
         {
             rl.ResetState();
         }
@@ -94,9 +94,9 @@ public class stateManager : MonoBehaviour
         else                StartCoroutine(ComputerMode());
     }
 
-    private void OnRockBagged()
+    private void OnStoneBagged()
     {
-        Rock.SetActive(true);
+        Stone.SetActive(true);
         rl.enabled = true;
         isPlayerTurn = true;
     }

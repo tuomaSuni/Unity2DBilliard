@@ -1043,7 +1043,7 @@ MonoBehaviour:
   isSoloMode: 1
   Computer: {fileID: 40060790}
   cl: {fileID: 40060789}
-  Rock: {fileID: 2061421587}
+  Stone: {fileID: 2061421587}
   rl: {fileID: 2061421591}
   listOfBalls: []
   HasPlayerWon: 0
@@ -1795,7 +1795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sm: {fileID: 510562931}
   sets: {fileID: 1672220989}
-  rock: {fileID: 2061421587}
+  stone: {fileID: 2061421587}
   computer: {fileID: 40060790}
 --- !u!1 &1221599844
 GameObject:
@@ -2077,11 +2077,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6134752993795830672, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
   m_PrefabInstance: {fileID: 1442183483}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1484851153 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5217997929461724378, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-  m_PrefabInstance: {fileID: 2061421585}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1599371772
 GameObject:
@@ -2608,7 +2603,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1520579969547815746, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_Name
-      value: rock
+      value: stone
       objectReference: {fileID: 0}
     - target: {fileID: 2264178564907980822, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: rm
@@ -2618,30 +2613,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
-    - target: {fileID: 2387367015178273305, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2693509587919850284, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3227561290050431278, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
-    - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: cuePoint
-      value: 
-      objectReference: {fileID: 1484851153}
-    - target: {fileID: 4112084955833845758, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: rockPoint
-      value: 
-      objectReference: {fileID: 2061421586}
     - target: {fileID: 7188506511621459976, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -2686,10 +2661,6 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
-    - target: {fileID: 7466100906210844791, guid: f91ff038b352c854782b1a05ec8575d0, type: 3}
-      propertyPath: cue
-      value: 
-      objectReference: {fileID: 1484851153}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2965,6 +2936,10 @@ PrefabInstance:
     - target: {fileID: 2210997695905027215, guid: 1adf43727114ecd4fa206ed1cc399fac, type: 3}
       propertyPath: m_Name
       value: inf_set
+      objectReference: {fileID: 0}
+    - target: {fileID: 2210997695905027215, guid: 1adf43727114ecd4fa206ed1cc399fac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3849956928649648939, guid: 1adf43727114ecd4fa206ed1cc399fac, type: 3}
       propertyPath: sm

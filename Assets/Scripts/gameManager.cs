@@ -6,7 +6,7 @@ public class gameManager : MonoBehaviour
 {
     [SerializeField] private stateManager sm;
     [SerializeField] private Transform sets;
-    [SerializeField] private GameObject rock;
+    [SerializeField] private GameObject stone;
     [SerializeField] private GameObject computer;
 
     void Awake()
@@ -16,8 +16,8 @@ public class gameManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("Type") == 2) 
         {
-            rock.AddComponent<nineBallRockLogic>();
-            rock.GetComponent<nineBallRockLogic>().nineset = sets.GetChild(2);
+            stone.AddComponent<nineBallStoneLogic>();
+            stone.GetComponent<nineBallStoneLogic>().nineset = sets.GetChild(2);
         }
 
         if (PlayerPrefs.GetInt("Mode") == 1)
