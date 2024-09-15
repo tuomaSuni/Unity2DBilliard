@@ -199,7 +199,6 @@ public class stoneLogic : MonoBehaviour
     {
         if (!isOnHand)
         {
-            rl.ResetRotationVector();
             sm.UIisInteractable = true;
             SetLineVisibility(true);
             hasCollided = false;

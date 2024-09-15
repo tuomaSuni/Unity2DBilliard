@@ -92,6 +92,8 @@ public class stateManager : MonoBehaviour
     {
         if (isSoloMode)     StartCoroutine(SoloMode());
         else                StartCoroutine(ComputerMode());
+
+        Stone.GetComponent<rotationLogic>().ResetRotationVector();
     }
 
     private void OnStoneBagged()
