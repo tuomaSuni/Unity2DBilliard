@@ -77,7 +77,11 @@ public class stoneLogic : MonoBehaviour
         HandleAiming();
         HandleShooting();
 
-        if (transform.localScale.x < 0.4f) ResetState();
+        if (transform.localScale.x < 0.4f)
+        {
+            ResetState();
+            StopCoroutine(ApplyRotationOnImpact());
+        }
     }
 
     private void HandleAiming()
@@ -205,6 +209,8 @@ public class stoneLogic : MonoBehaviour
             rb2D.drag = 1;
             Cursor.visible = false;
 
+            GetComponent<rotationLogic>().ResetRotationVector();
+
             if (nbrl != null)
             {
                 nbrl.hasCollided = false;
@@ -222,6 +228,8 @@ public class stoneLogic : MonoBehaviour
     {
         if (hasCollided == false)
         {
+            hasCollided = true;
+
             rb2D.drag = 1;
 
             StartCoroutine(ApplyRotationOnImpact());

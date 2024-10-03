@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class infBallGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject rock;
+    [SerializeField] private GameObject stone;
 
     public bool AllSiblingsAreDisabled()
     {
@@ -27,7 +27,7 @@ public class infBallGenerator : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        rock.SetActive(false);
+        stone.SetActive(false);
         
         foreach (Transform child in transform)
         {

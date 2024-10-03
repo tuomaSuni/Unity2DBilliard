@@ -27,7 +27,7 @@ public class holeLogic : MonoBehaviour
         sm.listOfBalls.Remove(rb);
         rb.velocity = Vector2.zero;
 
-        col.gameObject.transform.localScale *= 0.75f;
+        col.gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }
 
     private IEnumerator End(Collision2D col)
