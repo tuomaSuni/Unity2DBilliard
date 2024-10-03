@@ -1,4 +1,4 @@
-# WebGL Classic Billiard Game
+# Classic Game of Billiard in WebGL
 
 Play the game [here](https://tuomasuni.github.io/OpenPool/).
 
@@ -8,17 +8,17 @@ These instructions will help you set up the project on your local machine for de
 
 ### Prerequisites
 
-Unity: Version 2022.3.44f1 <br/>
+Unity: Version 2022.3.49f1 <br>
 
 ### Installation
 
-1. **Clone the repository:** <br/>
-`git clone https://github.com/tuomaSuni/unity2dbilliard.git` <br/><br/>
+1. **Clone the repository:** <br>
+`git clone https://github.com/tuomaSuni/unity2dbilliard.git` <br><br>
 
-2. **Open in Unity:** <br/>
+2. **Open in Unity:** <br>
 Open the project in Unity and head to Scenes/Menu
 
-3. **Start the game:** <br/>
+3. **Start the game:** <br>
 Press play on Unity editor
 
 ## Built With
