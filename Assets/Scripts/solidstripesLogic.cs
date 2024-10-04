@@ -18,7 +18,7 @@ public class solidstripesLogic : ballLogic
 
             if (sm.isLegalMove == false)
             {
-                sm.isLegalMove = ((sm.ballType == ballType) == sm.isPlayerTurn);
+                sm.isLegalMove = sm.isPlayerTurn == (sm.ballType == ballType);
             }
         }
     }

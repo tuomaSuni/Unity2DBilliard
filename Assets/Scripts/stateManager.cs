@@ -57,8 +57,7 @@ public class stateManager : MonoBehaviour
 
     public void CheckEightballGameState()
     {
-        if ((listOfBalls.Count == 1 && listOfBalls[0] == Stone.GetComponent<Rigidbody2D>()) == isPlayerTurn) EndGame(true);    
-        else EndGame(false);
+        EndGame(listOfBalls.Count == 1 && listOfBalls[0] == Stone.GetComponent<Rigidbody2D>() == isPlayerTurn);
     }
 
     public void CheckNineballGameState(bool wasLegalShot)
@@ -115,8 +114,6 @@ public class stateManager : MonoBehaviour
 
     private IEnumerator ComputerMode()
     {
-        int amountOfBallsOnStart = listOfBalls.Count;
-
         while (AllBallsHasStopped() == false)
         {
             yield return null;
@@ -125,7 +122,7 @@ public class stateManager : MonoBehaviour
         if (!isLegalMove) isPlayerTurn = !isPlayerTurn;
         
         if (isPlayerTurn) sl.SetIntoAimingState();
-        else sl.Shoot(cl.SetTarget(), cl.SetForce());
+        else StartCoroutine(cl.Shoot(sl));
 
         isLegalMove = false;
     }

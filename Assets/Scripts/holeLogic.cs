@@ -34,6 +34,7 @@ public class holeLogic : MonoBehaviour
     {
         GameObject baggedBall = col.gameObject;
 
+        yield return new WaitForSeconds(2.0f);
         while (sm.AllBallsHasStopped() == false)
         {
             yield return null;

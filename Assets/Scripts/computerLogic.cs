@@ -32,14 +32,25 @@ public class computerLogic : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("Type") == 1)
         {
-            for (int i = 0; i < set.childCount; i++)
-            {
-                if (set.GetChild(i).gameObject.activeSelf == true)
-                {
-                    currentTargetBall = set.GetChild(i-sm.ballType ?? 0);
+            List<Transform> enabledObjects = new List<Transform>();
 
-                    break;
+            for (int i = 0 + (7 * (sm.ballType ?? 0)); i < set.childCount - (7 * (1 - sm.ballType ?? 0)); i++)
+            {
+                Transform child = set.GetChild(i);
+                if (child.gameObject.activeSelf)
+                {
+                    enabledObjects.Add(child);
                 }
+            }
+
+            if (enabledObjects.Count > 1)
+            {
+                int randomIndex = Random.Range(sm.ballType ?? 0, enabledObjects.Count - (sm.ballType ?? 0 * 1));
+                currentTargetBall = enabledObjects[randomIndex];
+            }
+            else
+            {
+                currentTargetBall = enabledObjects[0];
             }
         }
         else if (PlayerPrefs.GetInt("Type") == 2)
@@ -60,6 +71,13 @@ public class computerLogic : MonoBehaviour
 
     public float SetForce()
     {
-        return Random.Range(10f, 30f);
+        return Random.Range(10f, 60f);
+    }
+
+    public IEnumerator Shoot(stoneLogic sl)
+    {
+        yield return null;
+
+        sl.Shoot(SetTarget(), SetForce());
     }
 }

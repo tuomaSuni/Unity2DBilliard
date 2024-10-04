@@ -68,8 +68,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6885162895006388922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 7743634101796906895}
   - component: {fileID: 3863370289746949004}
   m_Layer: 5
-  m_Name: Slider (1)
+  m_Name: soundSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +200,31 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24031011368186769}
+        m_TargetAssemblyTypeName: settingsLogic, Assembly-CSharp
+        m_MethodName: SetSoundVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: audioLogic, Assembly-CSharp
+        m_MethodName: SetSelectionVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2554004419695149260
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +393,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3697864682741541822
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +474,7 @@ RectTransform:
   m_Father: {fileID: 2535218239713302305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -527,7 +563,7 @@ GameObject:
   - component: {fileID: 6219023352769130297}
   - component: {fileID: 742876191721170206}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: songSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -605,7 +641,31 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24031011368186769}
+        m_TargetAssemblyTypeName: settingsLogic, Assembly-CSharp
+        m_MethodName: SetSongVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: audioLogic, Assembly-CSharp
+        m_MethodName: SetBackgroundVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5756593226031780421
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,8 +698,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3395895727188446887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -693,7 +753,7 @@ GameObject:
   - component: {fileID: 8701280626887004513}
   - component: {fileID: 5029480788797733833}
   m_Layer: 5
-  m_Name: music
+  m_Name: songIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -865,7 +925,7 @@ RectTransform:
   m_Father: {fileID: 8554165433537517121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -919,7 +979,7 @@ GameObject:
   - component: {fileID: 8310719405760657841}
   - component: {fileID: 4173107684672908700}
   m_Layer: 5
-  m_Name: sound
+  m_Name: soundIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,7 +1136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &636228405985395420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1150,6 +1210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830aa1e84b11da944b3888c3e06abb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songSlider: {fileID: 742876191721170206}
+  soundSlider: {fileID: 3863370289746949004}
 --- !u!1 &9122041144034399269
 GameObject:
   m_ObjectHideFlags: 0
