@@ -9,7 +9,7 @@ public class lineLogic : MonoBehaviour
     [Header("Utilities")]
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private GameObject endPointPrefab;
-    [SerializeField] private Transform rockPoint;
+    [SerializeField] private Transform stonePoint;
     [SerializeField] private Transform cuePoint;
     [SerializeField] private float dotSpacing;
     private int initialPoolSize = 10;
@@ -29,6 +29,7 @@ public class lineLogic : MonoBehaviour
 
     private void OnEnable()
     {
+        HandleLineRendering();
         cuePoint.gameObject.SetActive(true);
     }
 
@@ -75,7 +76,7 @@ public class lineLogic : MonoBehaviour
         UpdateDotPool(dotCount);
         UpdateDots(dotCount, mousePosition);
         UpdateEndPoint(mousePosition);
-        UpdateRockPoint(mousePosition);
+        UpdateStonePoint(mousePosition);
     }
 
     private Vector2 GetMouseWorldPosition()
@@ -86,7 +87,7 @@ public class lineLogic : MonoBehaviour
 
     private int CalculateDotCount(Vector2 mousePosition)
     {
-        float distance = Vector2.Distance(rockPoint.position, mousePosition);
+        float distance = Vector2.Distance(stonePoint.position, mousePosition);
         return Mathf.CeilToInt(distance / dotSpacing);
     }
 
@@ -115,7 +116,7 @@ public class lineLogic : MonoBehaviour
 
     private void UpdateDots(int dotCount, Vector2 mousePosition)
     {
-        Vector2 direction = (mousePosition - (Vector2)rockPoint.position).normalized;
+        Vector2 direction = (mousePosition - (Vector2)stonePoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         int index = 0;
@@ -123,7 +124,7 @@ public class lineLogic : MonoBehaviour
         {
             if (index >= dotCount) break;
 
-            Vector2 dotPosition = Vector2.Lerp(rockPoint.position, mousePosition, (index + 1) / (float)(dotCount + 1));
+            Vector2 dotPosition = Vector2.Lerp(stonePoint.position, mousePosition, (index + 1) / (float)(dotCount + 1));
             dot.transform.position = new Vector3(dotPosition.x, dotPosition.y, dot.transform.position.z);
             dot.transform.rotation = Quaternion.Euler(0, 0, angle);
 
@@ -138,10 +139,10 @@ public class lineLogic : MonoBehaviour
         endPoint.SetActive(true);
     }
 
-    private void UpdateRockPoint(Vector2 mousePosition)
+    private void UpdateStonePoint(Vector2 mousePosition)
     {
-        Vector2 direction = (mousePosition - (Vector2)rockPoint.position).normalized;
+        Vector2 direction = (mousePosition - (Vector2)stonePoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rockPoint.rotation = Quaternion.Euler(0, 0, angle);
+        stonePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 }

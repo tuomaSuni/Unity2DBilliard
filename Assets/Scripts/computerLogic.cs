@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class computerLogic : MonoBehaviour
 {
-    [HideInInspector] public Transform set;
+    [HideInInspector] public Transform set;    
 
     public Vector2 SetTarget()
     {
@@ -25,6 +25,6 @@ public class computerLogic : MonoBehaviour
 
     public float SetForce()
     {
-        return Random.Range(20f, 50f);
+        return Random.Range(10f, 30f);
     }
 }

@@ -20,7 +20,7 @@ public class ballLogic : MonoBehaviour
         sm.listOfBalls.Add(rb);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    protected virtual void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball") && !ballimpact.isPlaying)
         {

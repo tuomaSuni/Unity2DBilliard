@@ -5,14 +5,16 @@ using UnityEngine;
 public class stateManager : MonoBehaviour
 {
     public bool isSoloMode = true;
-    
+    public bool isLegalMove = false;
+    public bool? ballType = null;
+
     [Header("Computer")]
     [SerializeField] private GameObject Computer;
     [SerializeField] private computerLogic cl;
 
     [Header("Stone")]
     [SerializeField] private GameObject Stone;
-    [SerializeField] private stoneLogic rl;
+    [SerializeField] private stoneLogic sl;
 
     [Header("Balls")]
     [SerializeField] public List<Rigidbody2D> listOfBalls = new List<Rigidbody2D>();
@@ -55,7 +57,7 @@ public class stateManager : MonoBehaviour
 
     public void CheckEightballGameState()
     {
-        if (listOfBalls.Count == 1 && listOfBalls[0] == Stone.GetComponent<Rigidbody2D>()) EndGame(true);    
+        if ((listOfBalls.Count == 1 && listOfBalls[0] == Stone.GetComponent<Rigidbody2D>()) == isPlayerTurn) EndGame(true);    
         else EndGame(false);
     }
 
@@ -82,7 +84,7 @@ public class stateManager : MonoBehaviour
 
         if (Stone != null)
         {
-            rl.ResetState();
+            sl.ResetState();
         }
 
         Destroy(this);
@@ -97,7 +99,7 @@ public class stateManager : MonoBehaviour
     private void OnStoneBagged()
     {
         Stone.SetActive(true);
-        rl.enabled = true;
+        sl.enabled = true;
         isPlayerTurn = true;
     }
 
@@ -108,30 +110,23 @@ public class stateManager : MonoBehaviour
             yield return null;
         }
         
-        rl.SetIntoAimingState();
+        sl.SetIntoAimingState();
     }
 
     private IEnumerator ComputerMode()
     {
         int amountOfBallsOnStart = listOfBalls.Count;
-        
+
         while (AllBallsHasStopped() == false)
         {
             yield return null;
         }
-
-        if (listOfBalls.Count == amountOfBallsOnStart)
-        {
-            isPlayerTurn = !isPlayerTurn;
-        }
         
-        if (isPlayerTurn)
-        {
-            rl.SetIntoAimingState();
-        }
-        else
-        {
-            rl.Shoot(cl.SetTarget(), cl.SetForce());
-        }
+        if (!isLegalMove) isPlayerTurn = !isPlayerTurn;
+        
+        if (isPlayerTurn) sl.SetIntoAimingState();
+        else sl.Shoot(cl.SetTarget(), cl.SetForce());
+
+        isLegalMove = false;
     }
 }
