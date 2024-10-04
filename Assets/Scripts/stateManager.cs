@@ -6,7 +6,7 @@ public class stateManager : MonoBehaviour
 {
     public bool isSoloMode = true;
     public bool isLegalMove = false;
-    public bool? ballType = null;
+    public int? ballType = null;
 
     [Header("Computer")]
     [SerializeField] private GameObject Computer;

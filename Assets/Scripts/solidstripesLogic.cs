@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class solidstripesLogic : ballLogic
 {
-    [SerializeField] private bool ballType;
+    [SerializeField] private int ballType;
     protected override void OnCollisionEnter2D(Collision2D col)
     {
         base.OnCollisionEnter2D(col);

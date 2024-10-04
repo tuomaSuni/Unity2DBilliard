@@ -130,6 +130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1839944874}
     m_Modifications:
+    - target: {fileID: 5448416576944426453, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
+      propertyPath: sm
+      value: 
+      objectReference: {fileID: 510562931}
     - target: {fileID: 6243146923234802805, guid: e1bcd263e7351ce439db39355689d34c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1961,14 +1965,26 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 931494652427446926, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1557715677474983582, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 1557715677474983582, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1594699959098605918, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 1594699959098605918, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2191783706157615862, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -1997,6 +2013,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 5846758400897040953, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6134752993795830672, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2041,6 +2061,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 6696708506553499139, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6737133552091672544, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -2053,6 +2077,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 7403872635328878231, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854055298616575495, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
       propertyPath: sm
       value: 
@@ -2061,6 +2089,10 @@ PrefabInstance:
       propertyPath: sm
       value: 
       objectReference: {fileID: 510562931}
+    - target: {fileID: 8500100841102997786, guid: ae0ef33ee94abae45b816d6567aadd53, type: 3}
+      propertyPath: ballType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
