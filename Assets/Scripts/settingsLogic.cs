@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class settingsLogic : MonoBehaviour
 {
+    public event Action OnSongSet;
+    public event Action OnSoundSet;
+
     [SerializeField] Slider songSlider;
     [SerializeField] Slider soundSlider;
     public void OpenSettingsTab()
@@ -25,10 +29,12 @@ public class settingsLogic : MonoBehaviour
     public void SetSongVolume()
     {
         PlayerPrefs.SetFloat("Song", songSlider.value);
+        OnSongSet?.Invoke();
     }
 
     public void SetSoundVolume()
     {
         PlayerPrefs.SetFloat("Sound", soundSlider.value);
+        OnSoundSet?.Invoke();
     }
 }

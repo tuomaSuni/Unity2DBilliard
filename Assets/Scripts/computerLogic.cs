@@ -45,7 +45,7 @@ public class computerLogic : MonoBehaviour
 
             if (enabledObjects.Count > 1)
             {
-                int randomIndex = Random.Range(sm.ballType ?? 0, enabledObjects.Count - (sm.ballType ?? 0 * 1));
+                int randomIndex = Random.Range(sm.ballType ?? 0, enabledObjects.Count - Mathf.Abs((sm.ballType ?? 0) - 1));
                 currentTargetBall = enabledObjects[randomIndex];
             }
             else
