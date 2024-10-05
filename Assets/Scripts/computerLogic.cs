@@ -7,7 +7,7 @@ public class computerLogic : MonoBehaviour
     [SerializeField] private stateManager sm;
     [HideInInspector] public Transform set;    
 
-    public Vector2 SetTarget()
+    private Vector2 SetTarget()
     {
         Transform currentTargetBall = null;
         
@@ -69,14 +69,21 @@ public class computerLogic : MonoBehaviour
         return currentTargetBall.transform.position - transform.position.normalized;
     }
 
-    public float SetForce()
+    private float SetForce()
     {
         return Random.Range(10f, 60f);
     }
 
     public IEnumerator Shoot(stoneLogic sl)
     {
-        yield return null;
+        if (sm.isStonePlaceable)
+        {
+            sl.transform.position = Vector2.zero;
+            sm.isStonePlaceable = false;
+            sl.StartAiming();
+        }
+
+        yield return new WaitForSeconds(1.0f);
 
         sl.Shoot(SetTarget(), SetForce());
     }

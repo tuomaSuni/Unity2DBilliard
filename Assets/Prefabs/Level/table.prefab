@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 709916192231545349}
   - component: {fileID: 1193032586622967878}
   - component: {fileID: 8950232689732123554}
+  - component: {fileID: 4498019516761886923}
   - component: {fileID: 6384011394997709806}
   m_Layer: 0
   m_Name: colliders
@@ -301,6 +302,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4498019516761886923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672042233134782226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483b1c000895e24478dcf5997d866a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sl: {fileID: 0}
 --- !u!114 &6384011394997709806
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ public class stateManager : MonoBehaviour
     [HideInInspector] public bool isCharged = false;
     [HideInInspector] public bool isInitiallyClicked = false;
     [HideInInspector] public bool isPlayerTurn = true;
+    [HideInInspector] public bool isStonePlaceable = false;
 
     [Header("GameObjects")]
     [SerializeField] private BoxCollider2D limit;
@@ -99,7 +100,6 @@ public class stateManager : MonoBehaviour
     {
         Stone.SetActive(true);
         sl.enabled = true;
-        isPlayerTurn = true;
     }
 
     private IEnumerator SoloMode()
@@ -122,8 +122,16 @@ public class stateManager : MonoBehaviour
         if (!isLegalMove) isPlayerTurn = !isPlayerTurn;
         
         if (isPlayerTurn) sl.SetIntoAimingState();
-        else StartCoroutine(cl.Shoot(sl));
-
+        else
+        {
+            while (!sl.enabled)
+            {
+                yield return null;
+            }
+            
+            StartCoroutine(cl.Shoot(sl));
+        }
+        
         isLegalMove = false;
     }
 }

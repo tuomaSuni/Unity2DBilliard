@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2264178564907980822}
   - component: {fileID: 4103346044225941623}
   - component: {fileID: 2276487259745366147}
+  - component: {fileID: 429571358552488744}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Ball
@@ -295,6 +296,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &429571358552488744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520579969547815746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483b1c000895e24478dcf5997d866a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sl: {fileID: 0}
 --- !u!1 &2387367015178273305
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +440,7 @@ MonoBehaviour:
   sm: {fileID: 0}
   dotPrefab: {fileID: 8779660329476903500, guid: bdd181c4bdf1e344a97a84065d8b9066, type: 3}
   endPointPrefab: {fileID: 4801111443225440814, guid: 2e3aca32b891a5840bfdc78d6536cc65, type: 3}
-  rockPoint: {fileID: 7188506511621459976}
+  stonePoint: {fileID: 7188506511621459976}
   cuePoint: {fileID: 5217997929461724378}
   dotSpacing: 0.5
   mousePosition: {x: 0, y: 0}

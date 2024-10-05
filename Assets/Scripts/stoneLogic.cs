@@ -10,6 +10,7 @@ public class stoneLogic : MonoBehaviour
     private rotationLogic rl;
     private placingLogic  pl;
     private nineBallStoneLogic nbrl;
+    private dynamicSoundLogic dsl;
 
     [Header("Utilities")]
     [SerializeField] private Transform cue;
@@ -48,6 +49,7 @@ public class stoneLogic : MonoBehaviour
         ll = line.GetComponent<lineLogic>();
         rl = GetComponent<rotationLogic>();
         pl = GetComponent<placingLogic>();
+        dsl = GetComponent<dynamicSoundLogic>();
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -86,7 +88,7 @@ public class stoneLogic : MonoBehaviour
 
     private void HandleAiming()
     {
-        if (isOnHand && IsMouseOverGameWindow())
+        if (isOnHand && sm.isPlayerTurn && IsMouseOverGameWindow())
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 1f;
@@ -138,7 +140,7 @@ public class stoneLogic : MonoBehaviour
         }
     }
 
-    private void StartAiming()
+    public void StartAiming()
     {
         GetComponent<CircleCollider2D>().isTrigger = false;
 
@@ -177,7 +179,7 @@ public class stoneLogic : MonoBehaviour
 
     private void PlayShotSound()
     {
-        audioSource.volume = pushForce / maxPushForce;
+        audioSource.volume = dsl.baseVolume * (pushForce / maxPushForce);
         audioSource.pitch = Random.Range(0.95f, 1.05f);
         audioSource.Play();
     }
@@ -258,6 +260,7 @@ public class stoneLogic : MonoBehaviour
     {
         SetLineVisibility(false);
         isOnHand = true;
+        sm.isStonePlaceable = true;
         Cursor.visible = true;
         sm.UIisInteractable = false;
         this.enabled = false;
