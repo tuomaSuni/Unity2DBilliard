@@ -49,7 +49,8 @@ public class stateManager : MonoBehaviour
     {
         if (!Stone.activeSelf)
         {
-            OnStoneBagged();
+            Stone.SetActive(true);
+            sl.enabled = true;
         }
 
         if (Stone.GetComponent<CircleCollider2D>().isTrigger == false && limit.enabled == true) limit.enabled = false;
@@ -96,12 +97,6 @@ public class stateManager : MonoBehaviour
         else                StartCoroutine(ComputerMode());
     }
 
-    private void OnStoneBagged()
-    {
-        Stone.SetActive(true);
-        sl.enabled = true;
-    }
-
     private IEnumerator SoloMode()
     {
         while (AllBallsHasStopped() == false)
@@ -124,7 +119,7 @@ public class stateManager : MonoBehaviour
         if (isPlayerTurn) sl.SetIntoAimingState();
         else
         {
-            while (!sl.enabled)
+            while (sl.isBagged())
             {
                 yield return null;
             }

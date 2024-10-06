@@ -79,7 +79,7 @@ public class stoneLogic : MonoBehaviour
         HandleAiming();
         HandleShooting();
 
-        if (transform.localScale.x < 0.4f)
+        if (isBagged())
         {
             ResetState();
             StopCoroutine(ApplyRotationOnImpact());
@@ -266,7 +266,12 @@ public class stoneLogic : MonoBehaviour
         this.enabled = false;
     }
 
-    bool IsMouseOverGameWindow()
+    public bool isBagged()
+    {
+        return transform.localScale.x < 0.4f;
+    }
+
+    private bool IsMouseOverGameWindow()
     {
         Vector3 mousePosition = Input.mousePosition;
         return !( 0 > mousePosition.x || 0 > mousePosition.y || Screen.width < mousePosition.x || Screen.height < mousePosition.y );
